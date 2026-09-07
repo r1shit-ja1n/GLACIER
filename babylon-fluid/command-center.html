@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Real-Time Analysis — G.L.A.C.I.E.R.</title>
+  <meta name="description" content="South Lhonak Lake GLOF — Live environmental monitoring, glaciology telemetry, and hydrodynamic threat assessment." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* ═══════════════════════════════════════
+       RESET & TOKENS — UNIFIED DESIGN SYSTEM
+       ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #050505;
+      --panel:      rgba(15, 15, 15, 0.7);
+      --panel-hard: #0d0d0d;
+      --border:     rgba(255, 255, 255, 0.08);
+      --border-hi:  rgba(255, 255, 255, 0.18);
+      --cyan:       #00c8ff;
+      --crimson:    #e63946;
+      --crimson-dim:rgba(230, 57, 70, 0.12);
+      --orange:     #ff8c00;
+      --green:      #22c55e;
+      --text:       #ffffff;
+      --text-2:     rgba(255, 255, 255, 0.5);
+      --text-3:     rgba(255, 255, 255, 0.28);
+      --mono:       'Space Mono', 'Courier New', monospace;
+      --sans:       'Inter', system-ui, sans-serif;
+      --r:          3px;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow: hidden;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* ═══════════════════════════════════════
+       ROOT LAYOUT
+       ═══════════════════════════════════════ */
+    #root {
+      display: grid;
+      grid-template-rows: 42px auto 1fr;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* ── HEADER ── */
+    #hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 18px;
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .breadcrumb {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.7rem; letter-spacing: 0.08em; color: var(--text-3);
+    }
+    .breadcrumb a { color: var(--text-3); text-decoration: none; transition: color .2s; }
+    .breadcrumb a:hover { color: var(--cyan); }
+    .breadcrumb .sep { color: var(--text-3); }
+    .breadcrumb .cur { color: var(--text); font-weight: 500; }
+    .hdr-right { display: flex; align-items: center; gap: 10px; }
+    .badge-alert {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em;
+      padding: 3px 10px; border-radius: var(--r);
+      background: var(--crimson-dim); color: var(--crimson);
+      border: 1px solid rgba(230, 57, 70, 0.35);
+      display: flex; align-items: center; gap: 5px;
+      text-transform: uppercase;
+    }
+    .badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--crimson);
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+    .btn-hdr {
+      font-family: var(--sans); font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 5px 12px; cursor: pointer; border-radius: var(--r);
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text-2); transition: all .2s;
+    }
+    .btn-hdr:hover { border-color: var(--cyan); color: var(--cyan); }
+    .hdr-clock {
+      font-family: var(--mono); font-size: 11px;
+      color: var(--text-2); white-space: nowrap;
+    }
+    .hdr-clock span { color: var(--text-3); font-size: 0.6rem; letter-spacing: 0.05em; }
+
+    /* ── ALERT BANNER ── */
+    #alert-banner {
+      display: none; align-items: center; gap: 10px;
+      padding: 8px 18px;
+      background: rgba(100, 10, 15, 0.55);
+      border-bottom: 1px solid rgba(230, 57, 70, 0.3);
+      font-size: 0.72rem; font-weight: 500; color: #fca5a5;
+      letter-spacing: 0.04em;
+      animation: slideDown .35s ease;
+    }
+    #alert-banner.show { display: flex; }
+    @keyframes slideDown { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
+    #alert-banner .alert-icon { font-size: 14px; flex-shrink: 0; }
+    #alert-banner .dismiss {
+      margin-left: auto; background: none; border: none;
+      color: var(--text-3); font-size: 18px; cursor: pointer;
+      line-height: 1; transition: color .2s;
+    }
+    #alert-banner .dismiss:hover { color: var(--text); }
+
+    /* ── 3-COLUMN BODY ── */
+    #body {
+      display: grid;
+      grid-template-columns: 256px 1fr 310px;
+      gap: 8px; padding: 8px;
+      overflow: hidden;
+      height: 100%;
+      min-height: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       PANEL COMPONENT
+       ═══════════════════════════════════════ */
+    .panel {
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      transition: border-color .4s;
+    }
+    .panel.danger { border-color: rgba(230, 57, 70, 0.4); }
+    .panel-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .panel-title {
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-2);
+    }
+    .pill {
+      font-family: var(--mono); font-size: 0.55rem; font-weight: 700;
+      padding: 2px 7px; border-radius: var(--r); letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .pill-live  { background: rgba(34,197,94,.1); color: var(--green); border: 1px solid rgba(34,197,94,.2); }
+    .pill-warn  { background: rgba(255,140,0,.1); color: var(--orange); border: 1px solid rgba(255,140,0,.2); }
+    .pill-crit  { background: var(--crimson-dim); color: var(--crimson); border: 1px solid rgba(230,57,70,.25); }
+    .pill-blue  { background: rgba(0,200,255,.08); color: var(--cyan); border: 1px solid rgba(0,200,255,.18); }
+    .panel-body { padding: 10px 12px; flex: 1; overflow-y: auto; }
+
+    /* ── KPI GRID ── */
+    .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .kpi {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--r); padding: 8px 10px;
+      transition: border-color .4s;
+    }
+    .kpi.danger { border-color: rgba(230, 57, 70, 0.4); }
+    .kpi-lbl {
+      font-size: 0.55rem; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--text-3); margin-bottom: 3px;
+    }
+    .kpi-val { font-family: var(--mono); font-size: 16px; font-weight: 700; line-height: 1.15; }
+    .kpi-val .u { font-size: 10px; font-weight: 400; color: var(--text-3); margin-left: 1px; }
+    .kpi-val.c-red    { color: var(--crimson); }
+    .kpi-val.c-blue   { color: var(--cyan); }
+    .kpi-val.c-yellow { color: var(--orange); }
+    .kpi-val.c-green  { color: var(--green); }
+
+    /* ── DATA ROWS ── */
+    .drow {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 5px 0; border-bottom: 1px solid var(--border);
+    }
+    .drow:last-child { border-bottom: none; }
+    .dk { font-size: 0.72rem; color: var(--text-3); letter-spacing: 0.02em; }
+    .dv { font-family: var(--mono); font-size: 0.72rem; font-weight: 700; color: var(--text); }
+
+    /* ── STABILITY BAR ── */
+    .stab-row { display: flex; justify-content: space-between; align-items: center; font-size: 10px; margin-top: 10px; }
+    .stab-label { text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-3); font-size: 0.6rem; }
+    .bar-bg { width:100%; height:3px; background:rgba(255,255,255,.04); border-radius:1px; overflow:hidden; margin-top:5px; }
+    .bar-fill { height:100%; border-radius:1px; transition: width 1s ease, background .5s; }
+
+    /* ── SEISMIC TABLE ── */
+    .seis-tbl { width:100%; border-collapse:collapse; }
+    .seis-tbl th {
+      text-align:left; padding:5px 8px;
+      font-size:0.55rem; font-weight:600; text-transform:uppercase;
+      letter-spacing:0.1em; color:var(--text-3);
+      border-bottom:1px solid var(--border);
+    }
+    .seis-tbl td {
+      padding:5px 8px; color:var(--text-2);
+      border-bottom:1px solid var(--border);
+      font-family:var(--mono); font-size:0.7rem;
+    }
+    .seis-tbl tr:last-child td { border-bottom:none; }
+
+    /* ─── STATUS + SIM BUTTON ─── */
+    .status-bar {
+      display:flex; align-items:center; gap:7px;
+      padding:7px 10px; border-radius:var(--r); font-size:0.65rem;
+      font-weight:700; text-transform:uppercase; letter-spacing:0.1em;
+      border:1px solid; transition:all .4s;
+    }
+    .status-bar.ok   { color:var(--green); border-color:rgba(34,197,94,.2); background:rgba(34,197,94,.04); }
+    .status-bar.crit { color:var(--crimson); border-color:rgba(230,57,70,.3); background:var(--crimson-dim); }
+    .status-dot { width:6px; height:6px; border-radius:50%; }
+    .status-bar.ok   .status-dot { background:var(--green); }
+    .status-bar.crit .status-dot { background:var(--crimson); animation:blink 1.4s ease-in-out infinite; }
+
+    /* Flat crimson button — no gradient, no glow */
+    .simulate-btn {
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      padding:12px 16px; text-decoration:none; text-align:center;
+      font-family:var(--sans); font-size:0.7rem; font-weight:700;
+      letter-spacing:0.1em; text-transform:uppercase;
+      border-radius:var(--r); border:none; cursor:pointer; width:100%;
+      background: var(--crimson);
+      color:#fff;
+      transition:background .2s, transform .15s;
+    }
+    .simulate-btn:hover { background:#c1121f; transform:translateY(-1px); }
+
+    /* ═══════════════════════════════════════
+       LEFT COLUMN
+       ═══════════════════════════════════════ */
+    #left { display:flex; flex-direction:column; gap:8px; overflow:hidden; height:100%; min-height:0; }
+
+    /* ═══════════════════════════════════════
+       CENTER COLUMN
+       ═══════════════════════════════════════ */
+    #center { display:flex; flex-direction:column; gap:8px; overflow:hidden; height:100%; min-height:0; }
+
+    .sat-body { padding:0; position:relative; flex:1; overflow:hidden; }
+    #sat-img {
+      width:100%; height:100%;
+      object-fit:cover; object-position:center;
+      display:block;
+    }
+    #sat-legend {
+      position:absolute; bottom:8px; left:8px;
+      background:rgba(5,5,5,.85); border:1px solid var(--border);
+      border-radius:var(--r); padding:8px 12px; backdrop-filter:blur(12px);
+      font-size:0.62rem; color:var(--text-2); line-height:2;
+      letter-spacing:0.04em;
+    }
+    .leg-row { display:flex; align-items:center; gap:7px; }
+    .leg-sw { width:14px; height:2px; border-radius:1px; flex-shrink:0; }
+
+    /* ═══════════════════════════════════════
+       RIGHT COLUMN
+       ═══════════════════════════════════════ */
+    #right { display:flex; flex-direction:column; gap:8px; overflow:hidden; height:100%; min-height:0; }
+    .chart-wrap { position:relative; width:100%; flex:1; min-height:0; }
+    .chart-wrap canvas { width:100%!important; height:100%!important; }
+
+    /* Analysis text box */
+    #analysis-box {
+      background:rgba(230,57,70,0.05); border:1px solid rgba(230,57,70,0.2);
+      border-radius:var(--r); padding:9px 11px; font-size:0.7rem;
+      color:rgba(252,165,165,0.9); line-height:1.65;
+    }
+    #analysis-box .ab-label {
+      font-size:0.55rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:0.1em; color:var(--crimson); margin-bottom:4px;
+    }
+
+    /* ═══════════════════════════════════════
+       ENTRY ANIMATIONS
+       ═══════════════════════════════════════ */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .fu { opacity:0; animation:fadeUp .45s ease forwards; }
+    .fu.d1{animation-delay:.03s} .fu.d2{animation-delay:.06s}
+    .fu.d3{animation-delay:.09s} .fu.d4{animation-delay:.12s}
+    .fu.d5{animation-delay:.15s} .fu.d6{animation-delay:.18s}
+  </style>
+</head>
+<body>
+<div id="root">
+
+  <!-- ════════════ HEADER ════════════ -->
+  <header id="hdr">
+    <nav class="breadcrumb">
+      <a href="index.html">G.L.A.C.I.E.R.</a>
+      <span class="sep">/</span>
+      <a href="#">South Lhonak Lake</a>
+      <span class="sep">/</span>
+      <span class="cur">Real-Time Analysis</span>
+    </nav>
+    <div class="hdr-right">
+      <div class="badge-alert" id="hdr-alert-badge" style="display:none;">
+        <div class="badge-dot"></div>Alert Active
+      </div>
+      <button class="btn-hdr" onclick="exportReport()">↓ Export Report</button>
+      <div class="hdr-clock">
+        <span>UTC</span> <b id="clk-utc">--:--:--</b>
+        &nbsp;&nbsp;<span>IST</span> <b id="clk-ist">--:--:--</b>
+      </div>
+    </div>
+  </header>
+
+  <!-- ════════════ ALERT BANNER ════════════ -->
+  <div id="alert-banner">
+    <span class="alert-icon">⚠</span>
+    <span>CRITICAL ALERT: HIGH MELT RATE AND SEISMIC ANOMALY DETECTED. BREACH PROBABILITY: 92%</span>
+    <button class="dismiss" onclick="this.parentElement.classList.remove('show')">×</button>
+  </div>
+
+  <!-- ════════════ 3-COL BODY ════════════ -->
+  <div id="body">
+
+    <!-- ────── LEFT ────── -->
+    <div id="left">
+
+      <!-- KPI Grid -->
+      <div class="panel fu d1" id="kpi-panel">
+        <div class="panel-hdr">
+          <span class="panel-title">Key Parameters</span>
+          <span class="pill pill-crit" id="kpi-pill">● Critical</span>
+        </div>
+        <div class="panel-body" style="padding:10px 12px;">
+          <div class="kpi-grid" style="margin-bottom:10px;">
+            <div class="kpi danger" id="kpi-area-box">
+              <div class="kpi-lbl">Lake Area</div>
+              <div class="kpi-val c-red">1.67<span class="u">km²</span></div>
+            </div>
+            <div class="kpi" id="kpi-vol-box">
+              <div class="kpi-lbl">Est. Volume</div>
+              <div class="kpi-val c-blue">68.7<span class="u">Mm³</span></div>
+            </div>
+            <div class="kpi danger" id="kpi-stab-box">
+              <div class="kpi-lbl">Moraine Stability</div>
+              <div class="kpi-val c-red" id="kpi-stab-val">56.4<span class="u">%</span></div>
+            </div>
+            <div class="kpi" id="kpi-fb-box">
+              <div class="kpi-lbl">Freeboard Level</div>
+              <div class="kpi-val c-yellow">4.2<span class="u">m</span></div>
+            </div>
+          </div>
+          <div class="stab-row">
+            <span class="stab-label">Moraine Stability Index</span>
+            <span id="stab-pct" style="font-family:var(--mono);font-size:10px;color:var(--red);">56.4%</span>
+          </div>
+          <div class="bar-bg">
+            <div class="bar-fill" id="stab-bar" style="width:56.4%;background:linear-gradient(90deg,#ef4444,#f97316);"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Weather -->
+      <div class="panel fu d2" id="wx-panel">
+        <div class="panel-hdr">
+          <span class="panel-title">Weather — OpenWeatherMap</span>
+          <span class="pill pill-live" id="wx-pill">● Live</span>
+        </div>
+        <div class="panel-body">
+          <div class="drow"><span class="dk">Temperature</span><span class="dv" id="wx-temp">--°C</span></div>
+          <div class="drow"><span class="dk">Precipitation (1h)</span><span class="dv" id="wx-rain">-- mm</span></div>
+          <div class="drow"><span class="dk">Humidity</span><span class="dv" id="wx-hum">--%</span></div>
+          <div class="drow"><span class="dk">Wind Speed</span><span class="dv" id="wx-wind">-- m/s</span></div>
+          <div class="drow"><span class="dk">Conditions</span><span class="dv" id="wx-desc" style="font-family:var(--sans);text-transform:capitalize;">--</span></div>
+        </div>
+      </div>
+
+      <!-- Seismic -->
+      <div class="panel fu d3" id="seis-panel">
+        <div class="panel-hdr">
+          <span class="panel-title">Seismic Log — USGS</span>
+          <span class="pill pill-crit" id="seis-pill">● Alert</span>
+        </div>
+        <div class="panel-body" style="padding:6px 0;">
+          <table class="seis-tbl">
+            <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td style="color:var(--text-3)">Magnitude</td><td id="seis-mag">--</td></tr>
+              <tr><td style="color:var(--text-3)">Location</td><td id="seis-loc" style="font-family:var(--sans);font-size:10px;">--</td></tr>
+              <tr><td style="color:var(--text-3)">Depth</td><td id="seis-depth">-- km</td></tr>
+              <tr><td style="color:var(--text-3)">Time (IST)</td><td id="seis-time" style="font-size:10px;">--</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Status + button -->
+      <div class="fu d4" style="display:flex;flex-direction:column;gap:8px;margin-top:auto;">
+        <div class="status-bar crit" id="status-bar">
+          <div class="status-dot"></div>
+          <span id="status-txt">Critical Risk</span>
+        </div>
+        <a href="simulation.html" class="simulate-btn">
+          ▶ &nbsp;Initiate Hydrodynamic GLOF Simulation
+        </a>
+      </div>
+    </div>
+
+    <!-- ────── CENTER ────── -->
+    <div id="center">
+      <!-- Satellite panel -->
+      <div class="panel fu d2" style="flex:1;min-height:0;" id="sat-panel">
+        <div class="panel-hdr">
+          <span class="panel-title">Satellite Topography &amp; Hazard Zone</span>
+          <span class="pill pill-warn">⚠ High-Risk</span>
+        </div>
+        <div class="sat-body" style="flex:1;">
+          <img id="sat-img" src="/new_lake_image.jpg"
+               alt="South Lhonak Lake satellite topography — moraine dam and glacial lake annotated" />
+          <div id="sat-legend">
+            <div class="leg-row"><div class="leg-sw" style="background:#7dd3fc;"></div>South Lhonak Chho (Glacial Lake)</div>
+            <div class="leg-row"><div class="leg-sw" style="background:#a16207;"></div>Moraine Dam — High-Risk Subsidence</div>
+            <div class="leg-row"><div class="leg-sw" style="background:#94a3b8;"></div>Lateral Moraines — Sediment Flanks</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────── RIGHT ────── -->
+    <div id="right">
+      <!-- Chart 1: Lake Area -->
+      <div class="panel fu d3" style="flex:1;min-height:0;">
+        <div class="panel-hdr">
+          <span class="panel-title">Lake Area Expansion Trend</span>
+          <span class="pill pill-blue">Sentinel-2 / Landsat</span>
+        </div>
+        <div class="panel-body" style="padding:8px 10px;">
+          <div class="chart-wrap"><canvas id="chart-area"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Chart 2: Displacement -->
+      <div class="panel fu d4" style="flex:1;min-height:0;">
+        <div class="panel-hdr">
+          <span class="panel-title">Moraine Displacement — InSAR</span>
+          <span class="pill pill-warn">Pre-Breach 2023</span>
+        </div>
+        <div class="panel-body" style="padding:8px 10px;">
+          <div class="chart-wrap"><canvas id="chart-disp"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Chart 3: Risk Radar -->
+      <div class="panel fu d5" style="flex:1.1;min-height:0;">
+        <div class="panel-hdr">
+          <span class="panel-title">Risk Factor Breakdown</span>
+          <span class="pill pill-crit">CRITICAL</span>
+        </div>
+        <div class="panel-body" style="padding:6px 10px;display:flex;flex-direction:column;gap:8px;">
+          <div class="chart-wrap" style="flex:1;"><canvas id="chart-risk"></canvas></div>
+          <div id="analysis-box">
+            <div class="ab-label">📊 System Analysis</div>
+            The combination of a 4.2M seismic event, critical subsidence (42 mm), and historic peak water volume (68.7 Mm³) has critically compromised the terminal moraine. Immediate simulation is advised.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /body -->
+</div><!-- /root -->
+
+<script>
+  /* ═══════════════════════════════════════
+     CLOCKS
+     ═══════════════════════════════════════ */
+  function tickClocks() {
+    const now = new Date();
+    const fmt = tz => now.toLocaleTimeString('en-GB', { timeZone: tz, hour12: false });
+    document.getElementById('clk-utc').textContent = fmt('UTC');
+    document.getElementById('clk-ist').textContent = fmt('Asia/Kolkata');
+  }
+  setInterval(tickClocks, 1000); tickClocks();
+
+  /* ═══════════════════════════════════════
+     CHART.JS DARK THEME DEFAULTS
+     ═══════════════════════════════════════ */
+  Chart.defaults.color = 'rgba(255,255,255,0.4)';
+  Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+  Chart.defaults.font.family = "'Inter', system-ui";
+  Chart.defaults.font.size = 10;
+
+  /* ── Chart 1: Lake Area Expansion (Line) ── */
+  (function() {
+    const ctx = document.getElementById('chart-area').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['2010','2013','2016','2019','2021','2023'],
+        datasets: [{
+          label: 'Area (km²)',
+          data:  [0.83,  1.05,  1.21,  1.35,  1.48,  1.67],
+          borderColor: '#e63946',
+          borderWidth: 2,
+          pointRadius: 3,
+          pointBackgroundColor: '#e63946',
+          pointBorderColor: '#050505',
+          pointBorderWidth: 1,
+          tension: 0.3,
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { backgroundColor:'#0d0d0d', titleColor:'#fff', bodyColor:'rgba(255,255,255,0.6)', borderColor:'rgba(255,255,255,0.08)', borderWidth:1, padding:8, cornerRadius:2 }
+        },
+        scales: {
+          x: { grid:{ display:false }, ticks:{ color:'rgba(255,255,255,0.4)', font:{size:9} } },
+          y: { min:0.6, max:1.9, grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ callback:v=>v.toFixed(2), color:'rgba(255,255,255,0.4)', font:{size:9} } }
+        }
+      }
+    });
+  })();
+
+  /* ── Chart 2: Moraine Displacement (Bar) ── */
+  (function() {
+    const ctx = document.getElementById('chart-disp').getContext('2d');
+    // Color each bar from orange to red as displacement worsens
+    const barColors = [
+      'rgba(255,140,0,0.6)',    // Apr — orange
+      'rgba(255,120,0,0.65)',   // May
+      'rgba(240,90,0,0.7)',     // Jun
+      'rgba(230,57,70,0.65)',   // Jul
+      'rgba(200,30,50,0.75)',   // Aug
+      'rgba(180,20,40,0.85)',   // Sep — deep crimson
+    ];
+    const barBorder = ['#ff8c00','#ff7800','#f05a00','#e63946','#c81e32','#b41428'];
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Apr','May','Jun','Jul','Aug','Sep'],
+        datasets: [{
+          label: 'Displacement (mm)',
+          data: [12, 18, 24, 28, 35, 42],
+          backgroundColor: barColors,
+          borderColor: barBorder,
+          borderWidth: 1,
+          borderRadius: 2,
+          barPercentage: 0.65,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend:{ display:false },
+          tooltip:{ backgroundColor:'#0d0d0d', titleColor:'#fff', bodyColor:'rgba(255,255,255,0.6)', borderColor:'rgba(255,255,255,0.08)', borderWidth:1, padding:8, cornerRadius:2 }
+        },
+        scales: {
+          x: { grid:{ display:false }, ticks:{ color:'rgba(255,255,255,0.4)', font:{size:9} } },
+          y: { min:0, max:50, grid:{ color:'rgba(255,255,255,0.05)' }, ticks:{ callback:v=>v+'mm', color:'rgba(255,255,255,0.4)', font:{size:9} } }
+        }
+      }
+    });
+  })();
+
+  /* ── Chart 3: Risk Radar ── */
+  (function() {
+    const ctx = document.getElementById('chart-risk').getContext('2d');
+    new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['Seismic\nActivity', 'Temp /\nMelt', 'Lake\nVolume', 'Moraine\nIntegrity', 'Freeboard'],
+        datasets: [{
+          label: 'Risk Score',
+          data: [85, 90, 95, 80, 88],
+          backgroundColor: 'rgba(230,57,70,0.1)',
+          borderColor: '#e63946',
+          borderWidth: 1.5,
+          pointRadius: 3,
+          pointBackgroundColor: '#e63946',
+          pointBorderColor: '#050505',
+          pointBorderWidth: 1,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend:{ display:false } },
+        scales: {
+          r: {
+            min: 0, max: 100,
+            grid:         { color:'rgba(255,255,255,0.05)' },
+            angleLines:   { color:'rgba(255,255,255,0.05)' },
+            pointLabels:  { font:{ size:9 }, color:'rgba(255,255,255,0.4)' },
+            ticks:        { display:false, stepSize:25 }
+          }
+        }
+      }
+    });
+  })();
+
+  /* ═══════════════════════════════════════
+     API STATE
+     ═══════════════════════════════════════ */
+  let wxTemp  = null;
+  let seisMAG = 0;
+
+  /* ── Weather ── */
+  const OWM_KEY = 'YOUR_OWM_API_KEY';
+
+  async function fetchWeather() {
+    try {
+      const r = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=27.91&lon=88.20&units=metric&appid=${OWM_KEY}`);
+      if (!r.ok) throw new Error(r.status);
+      const d = await r.json();
+      wxTemp = d.main?.temp ?? null;
+      set('wx-temp', (d.main?.temp?.toFixed(1) ?? '--') + '°C');
+      set('wx-rain', ((d.rain?.['1h'] ?? 0).toFixed(1)) + ' mm');
+      set('wx-hum',  (d.main?.humidity ?? '--') + '%');
+      set('wx-wind', (d.wind?.speed?.toFixed(1) ?? '--') + ' m/s');
+      document.getElementById('wx-desc').textContent = d.weather?.[0]?.description ?? '--';
+    } catch {
+      // Simulated fallback for offline/invalid key
+      wxTemp = 9.5 + Math.random() * 5;
+      set('wx-temp', wxTemp.toFixed(1) + '°C');
+      set('wx-rain', (Math.random() * 3).toFixed(1) + ' mm');
+      set('wx-hum',  (74 + Math.floor(Math.random()*12)) + '%');
+      set('wx-wind', (2 + Math.random() * 4).toFixed(1) + ' m/s');
+      document.getElementById('wx-desc').textContent = 'partly cloudy';
+    }
+    analyzeGLOFRisk();
+  }
+
+  /* ── Seismic ── */
+  async function fetchSeismic() {
+    try {
+      const url = 'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&limit=1&orderby=time&latitude=27.91&longitude=88.20&maxradiuskm=600';
+      const r = await fetch(url);
+      if (!r.ok) throw new Error(r.status);
+      const d = await r.json();
+      const eq = d.features?.[0];
+      if (eq) {
+        seisMAG = eq.properties.mag ?? 0;
+        set('seis-mag',   seisMAG.toFixed(1));
+        document.getElementById('seis-loc').textContent   = eq.properties.place ?? '--';
+        set('seis-depth', (eq.geometry?.coordinates?.[2]?.toFixed(1) ?? '--') + ' km');
+        set('seis-time',  new Date(eq.properties.time).toLocaleString('en-GB', { timeZone:'Asia/Kolkata', hour12:false }));
+      }
+    } catch {
+      seisMAG = 4.2;   // hardcoded demo fallback
+      set('seis-mag',   '4.2');
+      document.getElementById('seis-loc').textContent   = '32 km N of South Lhonak Lake';
+      set('seis-depth', '18.4 km');
+      set('seis-time',  new Date().toLocaleString('en-GB', { timeZone:'Asia/Kolkata', hour12:false }));
+    }
+    analyzeGLOFRisk();
+  }
+
+  function set(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+
+  fetchWeather();
+  fetchSeismic();
+  setInterval(fetchWeather,  300000); // 5 min
+  setInterval(fetchSeismic,  120000); // 2 min
+
+  /* ═══════════════════════════════════════
+     GLOF RISK ANALYSIS
+     ═══════════════════════════════════════ */
+  function analyzeGLOFRisk() {
+    const isCritical = (wxTemp !== null && wxTemp > 10) || (seisMAG > 3.0);
+
+    // Alert banner
+    const banner = document.getElementById('alert-banner');
+    if (isCritical) {
+      banner.classList.add('show');
+      document.getElementById('hdr-alert-badge').style.display = 'flex';
+
+      // Status bar
+      const sb = document.getElementById('status-bar');
+      sb.className = 'status-bar crit';
+      document.getElementById('status-txt').textContent = 'Critical Risk';
+
+      // KPI panel + seismic panel borders
+      document.getElementById('kpi-panel').classList.add('danger');
+      document.getElementById('wx-panel').classList.add('danger');
+      document.getElementById('seis-panel').classList.add('danger');
+      document.getElementById('seis-pill').textContent = '● Alert';
+      document.getElementById('seis-pill').className   = 'pill pill-crit';
+      document.getElementById('kpi-pill').textContent  = '● Critical';
+      document.getElementById('kpi-pill').className    = 'pill pill-crit';
+    } else {
+      banner.classList.remove('show');
+      document.getElementById('hdr-alert-badge').style.display = 'none';
+
+      const sb = document.getElementById('status-bar');
+      sb.className = 'status-bar ok';
+      document.getElementById('status-txt').textContent = 'Monitoring';
+
+      document.getElementById('kpi-panel').classList.remove('danger');
+      document.getElementById('wx-panel').classList.remove('danger');
+      document.getElementById('seis-panel').classList.remove('danger');
+      document.getElementById('seis-pill').textContent = '● Normal';
+      document.getElementById('seis-pill').className   = 'pill pill-live';
+      document.getElementById('kpi-pill').textContent  = '● Live';
+      document.getElementById('kpi-pill').className    = 'pill pill-live';
+    }
+  }
+
+  /* ═══════════════════════════════════════
+     LIVE FLUCTUATIONS (every 2s)
+     ═══════════════════════════════════════ */
+  let stab = 56.4;
+  setInterval(() => {
+    stab += (Math.random() - 0.5) * 0.6;
+    stab = Math.max(40, Math.min(70, stab));
+    document.getElementById('kpi-stab-val').innerHTML = stab.toFixed(1) + '<span class="u">%</span>';
+    document.getElementById('stab-pct').textContent   = stab.toFixed(1) + '%';
+    document.getElementById('stab-bar').style.width   = stab + '%';
+  }, 2000);
+
+  /* ── Export (stub) ── */
+  function exportReport() {
+    alert('Generating PDF export — feature coming soon.');
+  }
+</script>
+</body>
+</html>

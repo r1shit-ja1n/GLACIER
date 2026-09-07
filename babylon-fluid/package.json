@@ -1,0 +1,22 @@
+{
+  "name": "babylon-fluid",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.2",
+    "vite": "^8.2.0"
+  },
+  "dependencies": {
+    "@types/leaflet": "^1.9.22",
+    "babylonjs": "^9.22.1",
+    "globe.gl": "^2.46.2",
+    "leaflet": "^1.9.4",
+    "three": "^0.185.1"
+  }
+}

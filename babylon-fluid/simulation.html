@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>South Lhonak Lake GLOF — G.L.A.C.I.E.R.</title>
+  <link rel="stylesheet" href="./src/style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>South Lhonak Lake GLOF — G.L.A.C.I.E.R.</title>
+  <!-- Use relative paths so Vite can always find the CSS -->
+  <link rel="stylesheet" href="./src/style.css" />
+  <style>
+    /* ── Zoom-out page entry ── */
+    @keyframes pageZoomIn {
+      from {
+        opacity: 0;
+        transform: scale(1.08);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    html {
+      animation: pageZoomIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    /* ── Right-side shared panel skin ── */
+    .right-panel {
+      position: absolute;
+      right: 18px;
+      background: rgba(15, 15, 15, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      padding: 14px 15px;
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      width: 222px;
+      box-sizing: border-box;
+    }
+
+    .right-panel h3 {
+      margin: 0 0 10px 0;
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* ── Infra stat rows ── */
+    .infra-stat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.72rem;
+      transition: opacity 0.4s;
+    }
+
+    .infra-stat:last-of-type {
+      border-bottom: none;
+    }
+
+    .infra-stat.zero {
+      opacity: 0.32;
+    }
+
+    .infra-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255, 255, 255, 0.45);
+      letter-spacing: 0.02em;
+    }
+
+    .infra-value {
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .infra-value.roads {
+      color: #ff8c00;
+    }
+
+    .infra-value.bridge {
+      color: #ff8c00;
+    }
+
+    .infra-value.power {
+      color: #ff8c00;
+    }
+
+    .infra-value.danger {
+      color: #e63946;
+    }
+
+    /* ── Critical assets sub-section ── */
+    #infra-assets-section {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(230, 57, 70, 0.2);
+    }
+
+    .assets-title {
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #e63946;
+      margin-bottom: 7px;
+      font-weight: 600;
+    }
+
+    .asset-tag {
+      display: block;
+      background: rgba(230, 57, 70, 0.06);
+      border: 1px solid rgba(230, 57, 70, 0.25);
+      border-radius: 2px;
+      padding: 5px 8px;
+      font-size: 0.68rem;
+      color: #fca5a5;
+      margin-bottom: 4px;
+    }
+
+    /* Removed assetGlow animation — flat design */
+
+    #infra-no-assets {
+      font-size: 0.68rem;
+      color: rgba(255, 255, 255, 0.28);
+      font-style: italic;
+    }
+
+    /* ── Infra panel reveal (fires when JS adds .infra-visible) ── */
+    #infraPanel {
+      margin-top: 14px;
+      border-top: 1px solid rgba(230, 57, 70, 0.15);
+      padding-top: 12px;
+      /* hidden state */
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.5s ease,
+        transform 0.5s ease;
+    }
+
+    #infraPanel.infra-visible {
+      max-height: 600px;
+      /* large enough for content */
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Side-by-side layout inside infraPanel ── */
+    #infra-flex-container {
+      display: flex;
+      flex-direction: row;
+      gap: 14px;
+      align-items: stretch;
+      margin-top: 4px;
+    }
+
+    #infra-stats-col {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      min-width: 155px;
+    }
+
+    #infra-map-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 180px;
+    }
+
+    /* miniMapWrapper fills the column height — JS sets display:flex on reveal */
+    #infraPanel #miniMapWrapper {
+      flex: 1;
+      flex-direction: column;
+      height: 100%;
+      margin-top: 0 !important;
+    }
+
+    /* miniMap tile area grows to fill wrapper */
+    #miniMap {
+      flex: 1;
+      min-height: 200px;
+      width: 100%;
+      border-radius: 2px;
+      pointer-events: none;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- The UI Dashboard -->
+  <div id="dashboard">
+    <a href="./index.html"
+      style="display:inline-flex;align-items:center;gap:5px;text-decoration:none;color:rgba(0,200,255,0.6);font-size:0.72rem;letter-spacing:0.12em;margin-bottom:12px;transition:color 0.2s;"
+      onmouseover="this.style.color='#00c8ff'" onmouseout="this.style.color='rgba(0,200,255,0.6)'">&#8592;
+      G.L.A.C.I.E.R.</a>
+    <h2>South Lhonak Lake</h2>
+
+    <div class="control-group">
+      <label for="timeSlider">Flood Propagation</label>
+      <input type="range" id="timeSlider" min="0" max="100" value="0">
+    </div>
+
+    <div class="control-group">
+      <label for="speedSelect">Playback Speed</label>
+      <select id="speedSelect">
+        <option value="1" selected>1x</option>
+        <option value="2">2x</option>
+        <option value="4">4x</option>
+      </select>
+    </div>
+
+    <div class="control-group buttons">
+      <button id="playBtn">Play</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+
+    <div class="stats">
+      <p>Impact Level: <span id="impactText" style="color: #4ade80;">Safe</span></p>
+    </div>
+
+    <!-- NEW: Live Telemetry / Damage Report -->
+    <div id="damageReport" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #334155;">
+      <h3 style="margin: 0 0 10px 0; font-size: 12px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px;">
+        Live Telemetry</h3>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+        <span style="color: #cbd5e1; font-size: 13px;">Time Elapsed:</span>
+        <span style="color: #fff; font-size: 13px; font-weight: bold;"><span id="timeText">0</span> s</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+        <span style="color: #cbd5e1; font-size: 13px;">Area Inundated:</span>
+        <span style="color: #38bdf8; font-size: 13px; font-weight: bold;"><span id="areaText">0.00</span> km²</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+        <span style="color: #cbd5e1; font-size: 13px;">Active Volume:</span>
+        <span style="color: #fff; font-size: 13px; font-weight: bold;"><span id="volText">0</span> m³</span>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <span style="color: #cbd5e1; font-size: 13px;">Peak Discharge:</span>
+        <span style="color: #ef4444; font-size: 13px; font-weight: bold;"><span id="flowText">0</span> m³/s</span>
+      </div>
+    </div>
+
+    <!-- INFRASTRUCTURE IMPACT — shown when flood completes -->
+    <div id="infraPanel">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px;">
+        <h3 style="margin: 0; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #ef4444;">
+          &#9888; Infrastructure Impact</h3>
+        <span style="font-size: 10px; color: #facc15; font-weight: bold; letter-spacing: 1px; background: rgba(250, 204, 21, 0.1); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(250, 204, 21, 0.3);">
+          &#9201; TOTAL TIME: 2 HOURS</span>
+      </div>
+
+      <!-- Two-column flex layout: stats LEFT, mini-map RIGHT -->
+      <div id="infra-flex-container">
+
+        <!-- LEFT: damage stats + critical assets -->
+        <div id="infra-stats-col">
+          <div class="infra-stat" id="infra-row-roads">
+            <span class="infra-label">&#128739; Roads Destroyed</span>
+            <span class="infra-value roads"><span id="infra-roads">&#8212;</span> km</span>
+          </div>
+          <div class="infra-stat" id="infra-row-bridges">
+            <span class="infra-label">&#127751; Bridges Lost</span>
+            <span class="infra-value bridge" id="infra-bridges">&#8212;</span>
+          </div>
+          <div class="infra-stat" id="infra-row-power">
+            <span class="infra-label">&#9889; Power Facilities</span>
+            <span class="infra-value power" id="infra-power">&#8212;</span>
+          </div>
+          <div class="infra-stat" id="infra-row-dams">
+            <span class="infra-label">&#128680; Dams at Risk</span>
+            <span class="infra-value danger" id="infra-dams">&#8212;</span>
+          </div>
+          <div class="infra-stat" id="infra-row-hospitals">
+            <span class="infra-label">&#127973; Hospitals</span>
+            <span class="infra-value danger" id="infra-hospitals">&#8212;</span>
+          </div>
+          <div class="infra-stat" id="infra-row-schools">
+            <span class="infra-label">&#127979; Schools</span>
+            <span class="infra-value danger" id="infra-schools">&#8212;</span>
+          </div>
+
+          <div id="infra-assets-section">
+            <div class="assets-title">&#9888; Critical Assets at Risk</div>
+            <div id="infra-assets-list">
+              <span id="infra-no-assets">Loading&#8230;</span>
+            </div>
+          </div>
+        </div><!-- /#infra-stats-col -->
+
+        <!-- RIGHT: mini-map thumbnail -->
+        <div id="infra-map-col">
+          <div id="miniMapWrapper" onclick="openFullMap()"
+            style="display:none;cursor:pointer;border-radius:8px;
+                   background:rgba(8,14,28,0.7);border:1px solid rgba(56,189,248,0.25);
+                   padding:8px 8px 6px;backdrop-filter:blur(6px);
+                   transition:transform 0.2s ease,border-color 0.2s ease,box-shadow 0.2s ease;"
+            onmouseover="this.style.transform='translateY(-2px)';this.style.borderColor='rgba(56,189,248,0.65)';this.style.boxShadow='0 0 14px rgba(56,189,248,0.25)'"
+            onmouseout="this.style.transform='';this.style.borderColor='rgba(56,189,248,0.25)';this.style.boxShadow=''"
+          >
+            <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#38bdf8;margin-bottom:5px;font-weight:700;">
+              &#128506; 2D Damage Map <span style="opacity:0.6;font-size:8px;">(Click to Expand)</span>
+            </div>
+            <div id="miniMap"></div>
+          </div>
+        </div><!-- /#infra-map-col -->
+
+      </div><!-- /#infra-flex-container -->
+    </div><!-- /#infraPanel -->
+
+
+  </div>
+
+  <!-- LOCATIONS panel (top-right) -->
+  <div id="poiPanel" class="right-panel" style="top: 20px;">
+    <h3 style="color: #38bdf8;">Locations</h3>
+    <button class="poi-btn" data-target="overview"
+      style="display:block;width:100%;margin-bottom:6px;padding:8px 10px;background:#0f172a;color:#38bdf8;border:1px solid #38bdf8;border-radius:5px;cursor:pointer;text-align:left;font-size:12px;transition:background 0.2s;line-height:1.4;">
+      <div style="font-weight:600;">&#127758; Overview</div>
+      <div style="font-size:10px;margin-top:2px;color:#64748b;letter-spacing:0.5px;">Full terrain view</div>
+    </button>
+    <button class="poi-btn" data-target="lake"
+      style="display:block;width:100%;margin-bottom:6px;padding:8px 10px;background:#1e293b;color:#e2e8f0;border:1px solid #475569;border-radius:5px;cursor:pointer;text-align:left;font-size:12px;transition:background 0.2s;line-height:1.4;">
+      <div style="font-weight:600;">South Lhonak Lake</div>
+      <div class="eta-text" id="eta-lake" style="font-size:10px;margin-top:2px;color:#ef4444;letter-spacing:0.5px;">
+        BREACH ORIGIN</div>
+    </button>
+    <button class="poi-btn" data-target="upperValley"
+      style="display:block;width:100%;margin-bottom:6px;padding:8px 10px;background:#1e293b;color:#e2e8f0;border:1px solid #475569;border-radius:5px;cursor:pointer;text-align:left;font-size:12px;transition:background 0.2s;line-height:1.4;">
+      <div style="font-weight:600;">Upper Valley</div>
+      <div class="eta-text" id="eta-upperValley"
+        style="font-size:10px;margin-top:2px;color:#64748b;letter-spacing:0.5px;">—</div>
+    </button>
+    <button class="poi-btn" data-target="chungthang"
+      style="display:block;width:100%;padding:8px 10px;background:#1e293b;color:#e2e8f0;border:1px solid #475569;border-radius:5px;cursor:pointer;text-align:left;font-size:12px;transition:background 0.2s;line-height:1.4;">
+      <div style="font-weight:600;">Chungthang Dam</div>
+      <div class="eta-text" id="eta-chungthang"
+        style="font-size:10px;margin-top:2px;color:#64748b;letter-spacing:0.5px;">—</div>
+    </button>
+  </div>
+
+  <!-- 3D Canvas -->
+  <canvas id="renderCanvas"></canvas>
+
+  <!-- ══ MAP MODAL ══════════════════════════════════════════════════════════ -->
+  <div id="mapModal" style="
+    display:none;
+    position:fixed;top:0;left:0;width:100%;height:100%;
+    background:rgba(8,14,28,0.97);
+    z-index:9999;
+    flex-direction:column;
+    backdrop-filter:blur(12px);
+    animation:mapFadeIn 0.4s ease both;
+  ">
+    <div style="
+      display:flex;justify-content:space-between;align-items:center;
+      padding:14px 22px;
+      background:rgba(15,23,42,0.9);
+      border-bottom:1px solid rgba(239,68,68,0.35);
+      flex-shrink:0;
+    ">
+      <span
+        style="color:#ef4444;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-family:'Inter',sans-serif;">
+        &#9888; 2D Damage Assessment Map
+      </span>
+      <button onclick="hideDamageMap()" style="
+        background:none;border:none;color:#94a3b8;font-size:26px;cursor:pointer;
+        line-height:1;padding:0 4px;transition:color 0.2s;
+      " onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#94a3b8'">&times;</button>
+    </div>
+    <div id="damageMap" style="flex:1; width:100%; height:100%; min-height:400px;"></div>
+  </div>
+
+  <style>
+    @keyframes mapFadeIn {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    @keyframes etaPulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.4;
+      }
+    }
+
+    /* Leaflet dark popup overrides */
+    .leaflet-popup-content-wrapper {
+      background: rgba(12, 12, 12, 0.95) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 3px !important;
+      font-family: 'Inter', sans-serif !important;
+    }
+
+    .leaflet-popup-tip {
+      background: rgba(12, 12, 12, 0.95) !important;
+    }
+
+    .leaflet-container {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Pulsing red marker */
+    .pulse-dot {
+      width: 16px;
+      height: 16px;
+      background: rgba(230, 57, 70, 0.6);
+      border: 1.5px solid #e63946;
+      border-radius: 50%;
+      animation: pulseDot 1.6s ease-in-out infinite;
+    }
+
+    @keyframes pulseDot {
+
+      0%,
+      100% {
+        transform: scale(0.85);
+      }
+
+      50% {
+        transform: scale(1.25);
+      }
+    }
+  </style>
+
+  <!-- Self-contained map logic (plain script, no module scope issues) -->
+  <script>
+    var _leafletMap = null;   // full-screen modal map
+    var _miniMap    = null;   // thumbnail map inside the panel
+
+    // ─────────────────────────────────────────────────────────────────
+    // showDamageMap(): called by main.ts when simulation ends.
+    // Renders the small non-interactive mini-map inside #miniMap.
+    // ─────────────────────────────────────────────────────────────────
+    function showDamageMap() {
+      var L = window.L;
+      if (!L) { setTimeout(showDamageMap, 500); return; }
+      if (_miniMap) return;   // already built
+
+      var wrapper = document.getElementById('miniMapWrapper');
+      if (wrapper) wrapper.style.display = 'flex';
+
+      _miniMap = L.map('miniMap', {
+        zoomControl: false, dragging: false, touchZoom: false,
+        scrollWheelZoom: false, doubleClickZoom: false,
+        attributionControl: false
+      }).setView([27.65, 88.45], 9);
+
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19
+      }).addTo(_miniMap);
+
+      // Red impact circle so it visually matches the full map
+      L.circle([27.65, 88.45], {
+        radius: 40000, color: '#ef4444', fillColor: '#ef4444',
+        fillOpacity: 0.18, weight: 1.5, dashArray: '6 4'
+      }).addTo(_miniMap);
+
+      setTimeout(function() { if (_miniMap) _miniMap.invalidateSize(); }, 450);
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+    // openFullMap(): called when user clicks the mini-map wrapper.
+    // Opens the full-screen modal and renders the detailed map.
+    // ─────────────────────────────────────────────────────────────────
+    function openFullMap() {
+      var modal = document.getElementById('mapModal');
+      if (!modal) return;
+      modal.style.display = 'flex';
+
+      // 450ms wait karo taaki modal animation poora ho jaye
+      setTimeout(function () {
+        var L = window.L;
+        if (!L) { console.warn('[DamageMap] Leaflet not ready yet'); return; }
+
+        // Agar map pehle se bana hai, toh size theek karke wapas jao
+        if (_leafletMap) {
+          _leafletMap.invalidateSize();
+          return;
+        }
+
+        // ==========================================
+        // YAHAN SE MAP BANNA SHURU HOGA 
+        // ==========================================
+        var centerLat = (window._glofMeta && window._glofMeta.lake) ? window._glofMeta.lake.center_lat : 27.913;
+        var centerLon = (window._glofMeta && window._glofMeta.lake) ? window._glofMeta.lake.center_lon : 88.199;
+
+        _leafletMap = L.map('damageMap', { zoomControl: true }).setView([27.65, 88.45], 10);
+
+        // ── 1. High-Resolution Satellite Base Map (Esri) ─────────────
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          attribution: '&copy; Esri &mdash; Source: Esri, USDA, USGS, AEX, GeoEye',
+          maxZoom: 19
+        }).addTo(_leafletMap);
+
+        // ── 2. City Names, Rivers & Road Labels overlay (Carto Voyager) ─────────
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
+          subdomains: 'abcd',
+          maxZoom: 19
+        }).addTo(_leafletMap);
+
+        // ── Source lake marker (blue glow) ─────────────────────────────────
+        var lakeHtml = '<div style="width:14px;height:14px;background:rgba(56,189,248,0.85);border:2px solid #38bdf8;border-radius:50%;box-shadow:0 0 14px #38bdf8;"></div>';
+        L.marker([centerLat, centerLon], {
+          icon: L.divIcon({ className: '', html: lakeHtml, iconSize: [14, 14], iconAnchor: [7, 7] })
+        }).addTo(_leafletMap)
+          .bindPopup('<b style="color:#38bdf8;font-size:12px;text-transform:uppercase;letter-spacing:1px;">SOURCE: South Lhonak Lake</b><br><span style="color:#94a3b8;font-size:10px;">Breach Origin — T=0</span>')
+          .openPopup();
+
+        // ── Max impact zone circle (dashed red) ────────────────────────────
+        L.circle([27.65, 88.45], {
+          radius: 40000, color: '#ef4444', fillColor: '#ef4444',
+          fillOpacity: 0.15, weight: 1.5, dashArray: '8 5'
+        }).addTo(_leafletMap)
+          .bindPopup('<span style="color:#fca5a5;font-size:11px;text-transform:uppercase;letter-spacing:1px;">&#9888; Max Inundation Zone — Teesta Valley Corridor</span>');
+
+        // ── Impacted waypoints (red/orange pulsing markers) ───────────────
+        var impactPoints = [
+          { name: 'Chungthang Dam', lat: 27.604, lon: 88.646, color: '#ef4444', eta: 'T+60 min' },
+          { name: 'Mangan District', lat: 27.496, lon: 88.534, color: '#fb923c', eta: 'T+90 min' },
+          { name: 'Dikchu Bridge', lat: 27.382, lon: 88.520, color: '#facc15', eta: 'T+120 min' }
+        ];
+        impactPoints.forEach(function (wp) {
+          var dot = '<div class="pulse-dot" style="background:' + wp.color + '55;border-color:' + wp.color + ';box-shadow:0 0 10px ' + wp.color + ';"></div>';
+          L.marker([wp.lat, wp.lon], {
+            icon: L.divIcon({ className: '', html: dot, iconSize: [18, 18], iconAnchor: [9, 9] })
+          }).addTo(_leafletMap)
+            .bindPopup('<b style="color:' + wp.color + ';font-size:11px;text-transform:uppercase;letter-spacing:1px;">&#9888; ' + wp.name + '</b><br><span style="color:#94a3b8;font-size:10px;">Impact: ' + wp.eta + '</span>');
+        });
+
+        // ── Safe Zones (glowing green circles + markers) ───────────────────
+        var safeZones = [
+          { name: 'Chungthang High Ground', lat: 27.620, lon: 88.658, r: 1200 },
+          { name: 'Mangan Elevated Refuge', lat: 27.510, lon: 88.548, r: 1000 },
+          { name: 'Singtam Highland', lat: 27.235, lon: 88.502, r: 1500 }
+        ];
+        safeZones.forEach(function (sz) {
+          L.circle([sz.lat, sz.lon], {
+            radius: sz.r, color: '#22c55e', fillColor: '#22c55e',
+            fillOpacity: 0.18, weight: 2
+          }).addTo(_leafletMap)
+            .bindPopup('<b style="color:#22c55e;font-size:11px;text-transform:uppercase;letter-spacing:1px;">&#9989; Designated Safe Zone</b><br><span style="color:#86efac;font-size:10px;">' + sz.name + '</span>');
+
+          var safeHtml = '<div style="width:12px;height:12px;background:rgba(34,197,94,0.8);border:2px solid #22c55e;border-radius:50%;box-shadow:0 0 10px #22c55e,0 0 20px rgba(34,197,94,0.4);"></div>';
+          L.marker([sz.lat, sz.lon], {
+            icon: L.divIcon({ className: '', html: safeHtml, iconSize: [12, 12], iconAnchor: [6, 6] })
+          }).addTo(_leafletMap);
+        });
+
+        // ── Evacuation Routes (dashed green polylines) ────────────────────
+        var evacRoutes = [
+          { from: [27.604, 88.646], to: [27.620, 88.658] },  // Chungthang → Chungthang High Ground
+          { from: [27.496, 88.534], to: [27.510, 88.548] },  // Mangan → Mangan Elevated Refuge
+          { from: [27.382, 88.520], to: [27.235, 88.502] }   // Dikchu → Singtam Highland
+        ];
+        evacRoutes.forEach(function (route) {
+          L.polyline([route.from, route.to], {
+            color: '#22c55e', weight: 2.5, dashArray: '5, 10', opacity: 0.85
+          }).addTo(_leafletMap)
+            .bindPopup('<span style="color:#22c55e;font-size:10px;text-transform:uppercase;letter-spacing:1px;">&#8594; Evacuation Route</span>');
+        });
+
+        // ── Map Legend (bottom-left) ──────────────────────────────────────
+        var legend = L.control({ position: 'bottomleft' });
+        legend.onAdd = function () {
+          var div = L.DomUtil.create('div');
+          div.innerHTML = [
+            '<div style="background:rgba(5,5,5,0.9);border:1px solid rgba(255,255,255,0.08);border-radius:3px;padding:10px 14px;font-family:Inter,sans-serif;font-size:10px;color:rgba(255,255,255,0.5);min-width:160px;backdrop-filter:blur(12px);">',
+            '  <div style="font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:7px;font-size:0.55rem;">Map Legend</div>',
+            '  <div style="margin-bottom:5px;display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:22px;height:4px;background:rgba(230,57,70,0.2);border:1px dashed #e63946;border-radius:1px;"></span> Impact Zone</div>',
+            '  <div style="margin-bottom:5px;display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:10px;height:10px;background:rgba(230,57,70,0.5);border:1.5px solid #e63946;border-radius:50%;"></span> Critical Asset</div>',
+            '  <div style="margin-bottom:5px;display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:10px;height:10px;background:rgba(34,197,94,0.4);border:1.5px solid #22c55e;border-radius:50%;"></span> Safe Zone</div>',
+            '  <div style="margin-bottom:5px;display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:22px;height:2px;background:repeating-linear-gradient(to right,#22c55e 0,#22c55e 5px,transparent 5px,transparent 10px);"></span> Evacuation Route</div>',
+            '  <div style="display:flex;align-items:center;gap:7px;"><span style="display:inline-block;width:10px;height:10px;background:rgba(0,200,255,0.6);border:1.5px solid #00c8ff;border-radius:50%;"></span> Breach Origin</div>',
+            '</div>'
+          ].join('');
+          return div;
+        };
+        legend.addTo(_leafletMap);
+
+        // ── Nominatim geocoding for critical assets ───────────────────────
+        var assets = (window._glofMeta && window._glofMeta.infrastructure_damage_summary)
+          ? (window._glofMeta.infrastructure_damage_summary.critical_assets_at_risk || [])
+          : [];
+
+        var idx = 0;
+        function geocodeNext() {
+          if (idx >= assets.length) return;
+          var name = assets[idx++];
+          var q = encodeURIComponent(name + ', Sikkim, India');
+          fetch('https://nominatim.openstreetmap.org/search?q=' + q + '&format=json&limit=1', {
+            headers: { 'Accept-Language': 'en', 'User-Agent': 'GLACIER-GLOF-Dashboard/1.0' }
+          })
+            .then(function (r) { return r.json(); })
+            .then(function (results) {
+              if (results && results.length > 0) {
+                var lat = parseFloat(results[0].lat), lon = parseFloat(results[0].lon);
+                L.marker([lat, lon], {
+                  icon: L.divIcon({ className: '', html: '<div class="pulse-dot"></div>', iconSize: [18, 18], iconAnchor: [9, 9] })
+                }).addTo(_leafletMap)
+                  .bindPopup('<b style="color:#ef4444;font-size:12px;text-transform:uppercase;letter-spacing:1px;">CRITICAL DAMAGE</b><br><span style="color:#fca5a5;font-size:11px;">' + name + '</span>');
+              }
+              setTimeout(geocodeNext, 1200);
+            })
+            .catch(function () { setTimeout(geocodeNext, 1200); });
+        }
+        setTimeout(geocodeNext, 800);
+
+        // Map layout ko fix karna at the end
+        _leafletMap.invalidateSize();
+
+      }, 450); // 450ms wait complete
+    }
+
+    function hideDamageMap() {
+      var modal = document.getElementById('mapModal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    // Expose for main.ts to call
+    window.showDamageMap = showDamageMap;
+    window.hideDamageMap = hideDamageMap;
+    window.openFullMap   = openFullMap;
+  </script>
+
+  <script type="module" src="./src/main.ts"></script>
+</body>
+
+</html>

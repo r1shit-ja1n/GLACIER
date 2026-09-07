@@ -1,0 +1,1783 @@
+{
+  "simulation": {
+    "dem_path": "./data/output_hh.tif",
+    "grid_shape": [
+      1570,
+      1912
+    ],
+    "pixel_size_m": 28.601432476771492,
+    "utm_crs": "EPSG:32645",
+    "sim_duration_s": 7200.0,
+    "steps": 34359,
+    "wall_clock_s": 482.51,
+    "manning_n": 0.045,
+    "bulking_factor": 1.6,
+    "h_norm_max_m": 20.0,
+    "v_norm_max_ms": 15.0
+  },
+  "dam_breach": {
+    "dam_lat": 27.91,
+    "dam_lon": 88.205,
+    "breach_width_m": 100.0,
+    "breach_depth_m": 40.0,
+    "breach_duration_s": 900,
+    "breach_start_s": 60.0
+  },
+  "lake": {
+    "mode": "radius",
+    "center_lat": 27.913,
+    "center_lon": 88.199,
+    "radius_m": 800.0,
+    "polygon_lonlat": null,
+    "elevation_threshold_m": null,
+    "initial_depth_m": 40.0
+  },
+  "telemetry": [
+    {
+      "time_sec": 0.58,
+      "inundated_area_km2": 2.13427,
+      "active_volume_m3": 80135392.0,
+      "water_volume_m3": 79096751.62,
+      "debris_volume_m3": 1038640.38,
+      "peak_discharge_m3s": 199725.75
+    },
+    {
+      "time_sec": 30.01,
+      "inundated_area_km2": 4.9148,
+      "active_volume_m3": 80597072.0,
+      "water_volume_m3": 63692596.0,
+      "debris_volume_m3": 16904476.0,
+      "peak_discharge_m3s": 1567581.12
+    },
+    {
+      "time_sec": 60.1,
+      "inundated_area_km2": 6.76602,
+      "active_volume_m3": 80933992.0,
+      "water_volume_m3": 63072088.0,
+      "debris_volume_m3": 17861904.0,
+      "peak_discharge_m3s": 1165110.75
+    },
+    {
+      "time_sec": 90.06,
+      "inundated_area_km2": 8.16242,
+      "active_volume_m3": 81281904.0,
+      "water_volume_m3": 60715346.0,
+      "debris_volume_m3": 20566558.0,
+      "peak_discharge_m3s": 1289016.5
+    },
+    {
+      "time_sec": 120.09,
+      "inundated_area_km2": 9.31913,
+      "active_volume_m3": 81570304.0,
+      "water_volume_m3": 61589362.0,
+      "debris_volume_m3": 19980942.0,
+      "peak_discharge_m3s": 1390736.0
+    },
+    {
+      "time_sec": 150.06,
+      "inundated_area_km2": 10.26643,
+      "active_volume_m3": 81765408.0,
+      "water_volume_m3": 63635196.0,
+      "debris_volume_m3": 18130212.0,
+      "peak_discharge_m3s": 1328775.0
+    },
+    {
+      "time_sec": 180.09,
+      "inundated_area_km2": 11.15237,
+      "active_volume_m3": 81931240.0,
+      "water_volume_m3": 63220788.0,
+      "debris_volume_m3": 18710452.0,
+      "peak_discharge_m3s": 1503702.5
+    },
+    {
+      "time_sec": 210.18,
+      "inundated_area_km2": 11.89106,
+      "active_volume_m3": 82067696.0,
+      "water_volume_m3": 61070490.0,
+      "debris_volume_m3": 20997206.0,
+      "peak_discharge_m3s": 1100079.25
+    },
+    {
+      "time_sec": 240.08,
+      "inundated_area_km2": 12.59785,
+      "active_volume_m3": 82253528.0,
+      "water_volume_m3": 59138288.0,
+      "debris_volume_m3": 23115240.0,
+      "peak_discharge_m3s": 967660.69
+    },
+    {
+      "time_sec": 270.08,
+      "inundated_area_km2": 13.41016,
+      "active_volume_m3": 82469352.0,
+      "water_volume_m3": 58348762.0,
+      "debris_volume_m3": 24120590.0,
+      "peak_discharge_m3s": 932917.88
+    },
+    {
+      "time_sec": 300.06,
+      "inundated_area_km2": 14.17421,
+      "active_volume_m3": 82652448.0,
+      "water_volume_m3": 57636724.0,
+      "debris_volume_m3": 25015724.0,
+      "peak_discharge_m3s": 915745.0
+    },
+    {
+      "time_sec": 330.15,
+      "inundated_area_km2": 14.86546,
+      "active_volume_m3": 82826288.0,
+      "water_volume_m3": 57196206.0,
+      "debris_volume_m3": 25630082.0,
+      "peak_discharge_m3s": 791690.62
+    },
+    {
+      "time_sec": 360.06,
+      "inundated_area_km2": 15.56897,
+      "active_volume_m3": 82979712.0,
+      "water_volume_m3": 56697752.0,
+      "debris_volume_m3": 26281960.0,
+      "peak_discharge_m3s": 745369.5
+    },
+    {
+      "time_sec": 390.2,
+      "inundated_area_km2": 16.31176,
+      "active_volume_m3": 83120936.0,
+      "water_volume_m3": 56536952.0,
+      "debris_volume_m3": 26583984.0,
+      "peak_discharge_m3s": 812639.31
+    },
+    {
+      "time_sec": 420.22,
+      "inundated_area_km2": 17.0938,
+      "active_volume_m3": 83261472.0,
+      "water_volume_m3": 56360758.0,
+      "debris_volume_m3": 26900714.0,
+      "peak_discharge_m3s": 847938.19
+    },
+    {
+      "time_sec": 450.22,
+      "inundated_area_km2": 17.92739,
+      "active_volume_m3": 83390992.0,
+      "water_volume_m3": 56343152.0,
+      "debris_volume_m3": 27047840.0,
+      "peak_discharge_m3s": 776657.31
+    },
+    {
+      "time_sec": 480.13,
+      "inundated_area_km2": 18.75688,
+      "active_volume_m3": 83531968.0,
+      "water_volume_m3": 56372044.0,
+      "debris_volume_m3": 27159924.0,
+      "peak_discharge_m3s": 683698.75
+    },
+    {
+      "time_sec": 510.05,
+      "inundated_area_km2": 19.53239,
+      "active_volume_m3": 83667568.0,
+      "water_volume_m3": 56270326.0,
+      "debris_volume_m3": 27397242.0,
+      "peak_discharge_m3s": 599088.88
+    },
+    {
+      "time_sec": 540.04,
+      "inundated_area_km2": 20.213,
+      "active_volume_m3": 83799864.0,
+      "water_volume_m3": 56109450.0,
+      "debris_volume_m3": 27690414.0,
+      "peak_discharge_m3s": 526592.88
+    },
+    {
+      "time_sec": 570.04,
+      "inundated_area_km2": 20.93615,
+      "active_volume_m3": 83935296.0,
+      "water_volume_m3": 56063460.0,
+      "debris_volume_m3": 27871836.0,
+      "peak_discharge_m3s": 480348.44
+    },
+    {
+      "time_sec": 600.23,
+      "inundated_area_km2": 21.71002,
+      "active_volume_m3": 84057376.0,
+      "water_volume_m3": 56016176.0,
+      "debris_volume_m3": 28041200.0,
+      "peak_discharge_m3s": 458398.56
+    },
+    {
+      "time_sec": 630.12,
+      "inundated_area_km2": 22.41353,
+      "active_volume_m3": 84172304.0,
+      "water_volume_m3": 55821330.0,
+      "debris_volume_m3": 28350974.0,
+      "peak_discharge_m3s": 420655.72
+    },
+    {
+      "time_sec": 660.05,
+      "inundated_area_km2": 23.08187,
+      "active_volume_m3": 84284904.0,
+      "water_volume_m3": 55687546.0,
+      "debris_volume_m3": 28597358.0,
+      "peak_discharge_m3s": 408082.28
+    },
+    {
+      "time_sec": 690.25,
+      "inundated_area_km2": 23.7363,
+      "active_volume_m3": 84391032.0,
+      "water_volume_m3": 55462504.0,
+      "debris_volume_m3": 28928528.0,
+      "peak_discharge_m3s": 416181.75
+    },
+    {
+      "time_sec": 720.12,
+      "inundated_area_km2": 24.36211,
+      "active_volume_m3": 84499888.0,
+      "water_volume_m3": 55180284.0,
+      "debris_volume_m3": 29319604.0,
+      "peak_discharge_m3s": 413673.81
+    },
+    {
+      "time_sec": 750.22,
+      "inundated_area_km2": 24.96582,
+      "active_volume_m3": 84611688.0,
+      "water_volume_m3": 54941628.0,
+      "debris_volume_m3": 29670060.0,
+      "peak_discharge_m3s": 398299.88
+    },
+    {
+      "time_sec": 780.02,
+      "inundated_area_km2": 25.63253,
+      "active_volume_m3": 84718832.0,
+      "water_volume_m3": 54817184.0,
+      "debris_volume_m3": 29901648.0,
+      "peak_discharge_m3s": 376023.84
+    },
+    {
+      "time_sec": 810.06,
+      "inundated_area_km2": 26.30087,
+      "active_volume_m3": 84825368.0,
+      "water_volume_m3": 54754772.0,
+      "debris_volume_m3": 30070596.0,
+      "peak_discharge_m3s": 351065.31
+    },
+    {
+      "time_sec": 840.17,
+      "inundated_area_km2": 26.78515,
+      "active_volume_m3": 84927192.0,
+      "water_volume_m3": 54544848.0,
+      "debris_volume_m3": 30382344.0,
+      "peak_discharge_m3s": 339770.0
+    },
+    {
+      "time_sec": 870.12,
+      "inundated_area_km2": 27.20153,
+      "active_volume_m3": 85022208.0,
+      "water_volume_m3": 54219596.0,
+      "debris_volume_m3": 30802612.0,
+      "peak_discharge_m3s": 326531.88
+    },
+    {
+      "time_sec": 900.06,
+      "inundated_area_km2": 27.54511,
+      "active_volume_m3": 85115312.0,
+      "water_volume_m3": 53884430.0,
+      "debris_volume_m3": 31230882.0,
+      "peak_discharge_m3s": 312593.44
+    },
+    {
+      "time_sec": 930.26,
+      "inundated_area_km2": 27.91977,
+      "active_volume_m3": 85206184.0,
+      "water_volume_m3": 53531154.0,
+      "debris_volume_m3": 31675030.0,
+      "peak_discharge_m3s": 303369.44
+    },
+    {
+      "time_sec": 960.09,
+      "inundated_area_km2": 28.28544,
+      "active_volume_m3": 85297472.0,
+      "water_volume_m3": 53163740.0,
+      "debris_volume_m3": 32133732.0,
+      "peak_discharge_m3s": 291800.41
+    },
+    {
+      "time_sec": 990.16,
+      "inundated_area_km2": 28.6601,
+      "active_volume_m3": 85403776.0,
+      "water_volume_m3": 52836920.0,
+      "debris_volume_m3": 32566856.0,
+      "peak_discharge_m3s": 283413.56
+    },
+    {
+      "time_sec": 1020.01,
+      "inundated_area_km2": 29.11575,
+      "active_volume_m3": 85511968.0,
+      "water_volume_m3": 52570490.0,
+      "debris_volume_m3": 32941478.0,
+      "peak_discharge_m3s": 301672.69
+    },
+    {
+      "time_sec": 1050.27,
+      "inundated_area_km2": 29.67365,
+      "active_volume_m3": 85615112.0,
+      "water_volume_m3": 52427828.0,
+      "debris_volume_m3": 33187284.0,
+      "peak_discharge_m3s": 329557.75
+    },
+    {
+      "time_sec": 1080.24,
+      "inundated_area_km2": 30.27737,
+      "active_volume_m3": 85714112.0,
+      "water_volume_m3": 52361556.0,
+      "debris_volume_m3": 33352556.0,
+      "peak_discharge_m3s": 345386.03
+    },
+    {
+      "time_sec": 1110.09,
+      "inundated_area_km2": 30.91299,
+      "active_volume_m3": 85809976.0,
+      "water_volume_m3": 52337314.0,
+      "debris_volume_m3": 33472662.0,
+      "peak_discharge_m3s": 351955.34
+    },
+    {
+      "time_sec": 1140.1,
+      "inundated_area_km2": 31.51507,
+      "active_volume_m3": 85903120.0,
+      "water_volume_m3": 52299300.0,
+      "debris_volume_m3": 33603820.0,
+      "peak_discharge_m3s": 354204.34
+    },
+    {
+      "time_sec": 1170.18,
+      "inundated_area_km2": 32.05661,
+      "active_volume_m3": 85993856.0,
+      "water_volume_m3": 52227796.0,
+      "debris_volume_m3": 33766060.0,
+      "peak_discharge_m3s": 356297.19
+    },
+    {
+      "time_sec": 1200.05,
+      "inundated_area_km2": 32.52371,
+      "active_volume_m3": 86081168.0,
+      "water_volume_m3": 52128424.0,
+      "debris_volume_m3": 33952744.0,
+      "peak_discharge_m3s": 360755.25
+    },
+    {
+      "time_sec": 1230.22,
+      "inundated_area_km2": 33.00799,
+      "active_volume_m3": 86167264.0,
+      "water_volume_m3": 52011416.0,
+      "debris_volume_m3": 34155848.0,
+      "peak_discharge_m3s": 368504.19
+    },
+    {
+      "time_sec": 1260.11,
+      "inundated_area_km2": 33.48164,
+      "active_volume_m3": 86251680.0,
+      "water_volume_m3": 51919976.0,
+      "debris_volume_m3": 34331704.0,
+      "peak_discharge_m3s": 379690.28
+    },
+    {
+      "time_sec": 1290.05,
+      "inundated_area_km2": 33.98146,
+      "active_volume_m3": 86334848.0,
+      "water_volume_m3": 51859696.0,
+      "debris_volume_m3": 34475152.0,
+      "peak_discharge_m3s": 389511.25
+    },
+    {
+      "time_sec": 1320.06,
+      "inundated_area_km2": 34.46738,
+      "active_volume_m3": 86416536.0,
+      "water_volume_m3": 51837688.0,
+      "debris_volume_m3": 34578848.0,
+      "peak_discharge_m3s": 397688.31
+    },
+    {
+      "time_sec": 1350.06,
+      "inundated_area_km2": 34.94348,
+      "active_volume_m3": 86496376.0,
+      "water_volume_m3": 51840548.0,
+      "debris_volume_m3": 34655828.0,
+      "peak_discharge_m3s": 403346.38
+    },
+    {
+      "time_sec": 1380.27,
+      "inundated_area_km2": 35.4204,
+      "active_volume_m3": 86574680.0,
+      "water_volume_m3": 51827576.0,
+      "debris_volume_m3": 34747104.0,
+      "peak_discharge_m3s": 407192.28
+    },
+    {
+      "time_sec": 1410.16,
+      "inundated_area_km2": 35.85723,
+      "active_volume_m3": 86650080.0,
+      "water_volume_m3": 51814660.0,
+      "debris_volume_m3": 34835420.0,
+      "peak_discharge_m3s": 410091.81
+    },
+    {
+      "time_sec": 1440.02,
+      "inundated_area_km2": 36.27362,
+      "active_volume_m3": 86723568.0,
+      "water_volume_m3": 51801188.0,
+      "debris_volume_m3": 34922380.0,
+      "peak_discharge_m3s": 413052.19
+    },
+    {
+      "time_sec": 1470.14,
+      "inundated_area_km2": 36.68754,
+      "active_volume_m3": 86795760.0,
+      "water_volume_m3": 51776000.0,
+      "debris_volume_m3": 35019760.0,
+      "peak_discharge_m3s": 417518.06
+    },
+    {
+      "time_sec": 1500.24,
+      "inundated_area_km2": 37.07366,
+      "active_volume_m3": 86866168.0,
+      "water_volume_m3": 51732852.0,
+      "debris_volume_m3": 35133316.0,
+      "peak_discharge_m3s": 422922.97
+    },
+    {
+      "time_sec": 1530.07,
+      "inundated_area_km2": 37.42787,
+      "active_volume_m3": 86934544.0,
+      "water_volume_m3": 51674256.0,
+      "debris_volume_m3": 35260288.0,
+      "peak_discharge_m3s": 426979.0
+    },
+    {
+      "time_sec": 1560.18,
+      "inundated_area_km2": 37.79027,
+      "active_volume_m3": 87002096.0,
+      "water_volume_m3": 51613028.0,
+      "debris_volume_m3": 35389068.0,
+      "peak_discharge_m3s": 429767.69
+    },
+    {
+      "time_sec": 1590.04,
+      "inundated_area_km2": 38.17393,
+      "active_volume_m3": 87067488.0,
+      "water_volume_m3": 51564296.0,
+      "debris_volume_m3": 35503192.0,
+      "peak_discharge_m3s": 431417.31
+    },
+    {
+      "time_sec": 1620.21,
+      "inundated_area_km2": 38.59031,
+      "active_volume_m3": 87131920.0,
+      "water_volume_m3": 51533488.0,
+      "debris_volume_m3": 35598432.0,
+      "peak_discharge_m3s": 432243.34
+    },
+    {
+      "time_sec": 1650.15,
+      "inundated_area_km2": 39.02878,
+      "active_volume_m3": 87194064.0,
+      "water_volume_m3": 51521576.0,
+      "debris_volume_m3": 35672488.0,
+      "peak_discharge_m3s": 432459.53
+    },
+    {
+      "time_sec": 1680.15,
+      "inundated_area_km2": 39.45416,
+      "active_volume_m3": 87254344.0,
+      "water_volume_m3": 51520616.0,
+      "debris_volume_m3": 35733728.0,
+      "peak_discharge_m3s": 432080.53
+    },
+    {
+      "time_sec": 1710.21,
+      "inundated_area_km2": 39.93763,
+      "active_volume_m3": 87312760.0,
+      "water_volume_m3": 51531400.0,
+      "debris_volume_m3": 35781360.0,
+      "peak_discharge_m3s": 431065.09
+    },
+    {
+      "time_sec": 1740.06,
+      "inundated_area_km2": 40.39573,
+      "active_volume_m3": 87368784.0,
+      "water_volume_m3": 51549920.0,
+      "debris_volume_m3": 35818864.0,
+      "peak_discharge_m3s": 429562.62
+    },
+    {
+      "time_sec": 1770.28,
+      "inundated_area_km2": 40.86201,
+      "active_volume_m3": 87423416.0,
+      "water_volume_m3": 51575800.0,
+      "debris_volume_m3": 35847616.0,
+      "peak_discharge_m3s": 427507.31
+    },
+    {
+      "time_sec": 1800.02,
+      "inundated_area_km2": 41.31112,
+      "active_volume_m3": 87475280.0,
+      "water_volume_m3": 51603468.0,
+      "debris_volume_m3": 35871812.0,
+      "peak_discharge_m3s": 425110.59
+    },
+    {
+      "time_sec": 1830.13,
+      "inundated_area_km2": 41.73895,
+      "active_volume_m3": 87525944.0,
+      "water_volume_m3": 51622036.0,
+      "debris_volume_m3": 35903908.0,
+      "peak_discharge_m3s": 422873.38
+    },
+    {
+      "time_sec": 1860.06,
+      "inundated_area_km2": 42.13407,
+      "active_volume_m3": 87574496.0,
+      "water_volume_m3": 51625524.0,
+      "debris_volume_m3": 35948972.0,
+      "peak_discharge_m3s": 421595.88
+    },
+    {
+      "time_sec": 1890.09,
+      "inundated_area_km2": 42.52918,
+      "active_volume_m3": 87621552.0,
+      "water_volume_m3": 51607264.0,
+      "debris_volume_m3": 36014288.0,
+      "peak_discharge_m3s": 421713.28
+    },
+    {
+      "time_sec": 1920.23,
+      "inundated_area_km2": 42.91203,
+      "active_volume_m3": 87667240.0,
+      "water_volume_m3": 51573240.0,
+      "debris_volume_m3": 36094000.0,
+      "peak_discharge_m3s": 421573.56
+    },
+    {
+      "time_sec": 1950.19,
+      "inundated_area_km2": 43.28096,
+      "active_volume_m3": 87711168.0,
+      "water_volume_m3": 51523496.0,
+      "debris_volume_m3": 36187672.0,
+      "peak_discharge_m3s": 420540.75
+    },
+    {
+      "time_sec": 1980.26,
+      "inundated_area_km2": 43.65317,
+      "active_volume_m3": 87753792.0,
+      "water_volume_m3": 51459464.0,
+      "debris_volume_m3": 36294328.0,
+      "peak_discharge_m3s": 418882.78
+    },
+    {
+      "time_sec": 2010.16,
+      "inundated_area_km2": 44.01229,
+      "active_volume_m3": 87794720.0,
+      "water_volume_m3": 51383232.0,
+      "debris_volume_m3": 36411488.0,
+      "peak_discharge_m3s": 417135.31
+    },
+    {
+      "time_sec": 2040.19,
+      "inundated_area_km2": 44.3665,
+      "active_volume_m3": 87834512.0,
+      "water_volume_m3": 51290652.0,
+      "debris_volume_m3": 36543860.0,
+      "peak_discharge_m3s": 415147.81
+    },
+    {
+      "time_sec": 2070.06,
+      "inundated_area_km2": 44.69618,
+      "active_volume_m3": 87873008.0,
+      "water_volume_m3": 51187316.0,
+      "debris_volume_m3": 36685692.0,
+      "peak_discharge_m3s": 412772.56
+    },
+    {
+      "time_sec": 2100.05,
+      "inundated_area_km2": 45.01603,
+      "active_volume_m3": 87910720.0,
+      "water_volume_m3": 51078328.0,
+      "debris_volume_m3": 36832392.0,
+      "peak_discharge_m3s": 410105.62
+    },
+    {
+      "time_sec": 2130.16,
+      "inundated_area_km2": 45.34325,
+      "active_volume_m3": 87947696.0,
+      "water_volume_m3": 50961248.0,
+      "debris_volume_m3": 36986448.0,
+      "peak_discharge_m3s": 407279.94
+    },
+    {
+      "time_sec": 2160.09,
+      "inundated_area_km2": 45.65083,
+      "active_volume_m3": 87983632.0,
+      "water_volume_m3": 50845712.0,
+      "debris_volume_m3": 37137920.0,
+      "peak_discharge_m3s": 404337.69
+    },
+    {
+      "time_sec": 2190.14,
+      "inundated_area_km2": 45.94533,
+      "active_volume_m3": 88018896.0,
+      "water_volume_m3": 50734004.0,
+      "debris_volume_m3": 37284892.0,
+      "peak_discharge_m3s": 401153.16
+    },
+    {
+      "time_sec": 2220.01,
+      "inundated_area_km2": 46.25373,
+      "active_volume_m3": 88053120.0,
+      "water_volume_m3": 50625936.0,
+      "debris_volume_m3": 37427184.0,
+      "peak_discharge_m3s": 397705.75
+    },
+    {
+      "time_sec": 2250.28,
+      "inundated_area_km2": 46.54822,
+      "active_volume_m3": 88086944.0,
+      "water_volume_m3": 50514528.0,
+      "debris_volume_m3": 37572416.0,
+      "peak_discharge_m3s": 393950.28
+    },
+    {
+      "time_sec": 2280.09,
+      "inundated_area_km2": 46.84272,
+      "active_volume_m3": 88119424.0,
+      "water_volume_m3": 50404928.0,
+      "debris_volume_m3": 37714496.0,
+      "peak_discharge_m3s": 390008.72
+    },
+    {
+      "time_sec": 2310.02,
+      "inundated_area_km2": 47.11513,
+      "active_volume_m3": 88152656.0,
+      "water_volume_m3": 50304344.0,
+      "debris_volume_m3": 37848312.0,
+      "peak_discharge_m3s": 385816.38
+    },
+    {
+      "time_sec": 2340.08,
+      "inundated_area_km2": 47.43007,
+      "active_volume_m3": 88192960.0,
+      "water_volume_m3": 50221932.0,
+      "debris_volume_m3": 37971028.0,
+      "peak_discharge_m3s": 381375.12
+    },
+    {
+      "time_sec": 2370.27,
+      "inundated_area_km2": 47.76138,
+      "active_volume_m3": 88238016.0,
+      "water_volume_m3": 50140584.0,
+      "debris_volume_m3": 38097432.0,
+      "peak_discharge_m3s": 376709.81
+    },
+    {
+      "time_sec": 2400.29,
+      "inundated_area_km2": 48.11068,
+      "active_volume_m3": 88289008.0,
+      "water_volume_m3": 50069280.0,
+      "debris_volume_m3": 38219728.0,
+      "peak_discharge_m3s": 371905.56
+    },
+    {
+      "time_sec": 2430.15,
+      "inundated_area_km2": 48.4788,
+      "active_volume_m3": 88346008.0,
+      "water_volume_m3": 50002652.0,
+      "debris_volume_m3": 38343356.0,
+      "peak_discharge_m3s": 367013.31
+    },
+    {
+      "time_sec": 2460.16,
+      "inundated_area_km2": 48.86737,
+      "active_volume_m3": 88407248.0,
+      "water_volume_m3": 49939200.0,
+      "debris_volume_m3": 38468048.0,
+      "peak_discharge_m3s": 362016.66
+    },
+    {
+      "time_sec": 2490.02,
+      "inundated_area_km2": 49.25921,
+      "active_volume_m3": 88469696.0,
+      "water_volume_m3": 49883288.0,
+      "debris_volume_m3": 38586408.0,
+      "peak_discharge_m3s": 357007.56
+    },
+    {
+      "time_sec": 2520.27,
+      "inundated_area_km2": 49.68705,
+      "active_volume_m3": 88533360.0,
+      "water_volume_m3": 49835192.0,
+      "debris_volume_m3": 38698168.0,
+      "peak_discharge_m3s": 351893.69
+    },
+    {
+      "time_sec": 2550.12,
+      "inundated_area_km2": 50.11243,
+      "active_volume_m3": 88595952.0,
+      "water_volume_m3": 49782236.0,
+      "debris_volume_m3": 38813716.0,
+      "peak_discharge_m3s": 346829.56
+    },
+    {
+      "time_sec": 2580.17,
+      "inundated_area_km2": 50.51491,
+      "active_volume_m3": 88659296.0,
+      "water_volume_m3": 49733144.0,
+      "debris_volume_m3": 38926152.0,
+      "peak_discharge_m3s": 341711.62
+    },
+    {
+      "time_sec": 2610.13,
+      "inundated_area_km2": 50.9272,
+      "active_volume_m3": 88723976.0,
+      "water_volume_m3": 49698816.0,
+      "debris_volume_m3": 39025160.0,
+      "peak_discharge_m3s": 336578.44
+    },
+    {
+      "time_sec": 2640.01,
+      "inundated_area_km2": 51.37385,
+      "active_volume_m3": 88790848.0,
+      "water_volume_m3": 49656124.0,
+      "debris_volume_m3": 39134724.0,
+      "peak_discharge_m3s": 331435.34
+    },
+    {
+      "time_sec": 2670.13,
+      "inundated_area_km2": 51.79678,
+      "active_volume_m3": 88872248.0,
+      "water_volume_m3": 49633732.0,
+      "debris_volume_m3": 39238516.0,
+      "peak_discharge_m3s": 326229.06
+    },
+    {
+      "time_sec": 2700.26,
+      "inundated_area_km2": 52.26225,
+      "active_volume_m3": 88977768.0,
+      "water_volume_m3": 49628960.0,
+      "debris_volume_m3": 39348808.0,
+      "peak_discharge_m3s": 321017.5
+    },
+    {
+      "time_sec": 2730.22,
+      "inundated_area_km2": 52.7228,
+      "active_volume_m3": 89087800.0,
+      "water_volume_m3": 49606592.0,
+      "debris_volume_m3": 39481208.0,
+      "peak_discharge_m3s": 315851.12
+    },
+    {
+      "time_sec": 2760.23,
+      "inundated_area_km2": 53.21199,
+      "active_volume_m3": 89200136.0,
+      "water_volume_m3": 49594216.0,
+      "debris_volume_m3": 39605920.0,
+      "peak_discharge_m3s": 310660.81
+    },
+    {
+      "time_sec": 2790.11,
+      "inundated_area_km2": 53.66355,
+      "active_volume_m3": 89311312.0,
+      "water_volume_m3": 49563536.0,
+      "debris_volume_m3": 39747776.0,
+      "peak_discharge_m3s": 305517.0
+    },
+    {
+      "time_sec": 2820.22,
+      "inundated_area_km2": 54.15029,
+      "active_volume_m3": 89434120.0,
+      "water_volume_m3": 49569112.0,
+      "debris_volume_m3": 39865008.0,
+      "peak_discharge_m3s": 300331.12
+    },
+    {
+      "time_sec": 2850.24,
+      "inundated_area_km2": 54.65584,
+      "active_volume_m3": 89575280.0,
+      "water_volume_m3": 49573872.0,
+      "debris_volume_m3": 40001408.0,
+      "peak_discharge_m3s": 295137.81
+    },
+    {
+      "time_sec": 2880.15,
+      "inundated_area_km2": 55.16384,
+      "active_volume_m3": 89725296.0,
+      "water_volume_m3": 49588472.0,
+      "debris_volume_m3": 40136824.0,
+      "peak_discharge_m3s": 289981.47
+    },
+    {
+      "time_sec": 2910.1,
+      "inundated_area_km2": 55.65957,
+      "active_volume_m3": 89896736.0,
+      "water_volume_m3": 49631160.0,
+      "debris_volume_m3": 40265576.0,
+      "peak_discharge_m3s": 284830.88
+    },
+    {
+      "time_sec": 2940.08,
+      "inundated_area_km2": 56.19539,
+      "active_volume_m3": 90100208.0,
+      "water_volume_m3": 49686744.0,
+      "debris_volume_m3": 40413464.0,
+      "peak_discharge_m3s": 279721.22
+    },
+    {
+      "time_sec": 2970.11,
+      "inundated_area_km2": 56.7443,
+      "active_volume_m3": 90324720.0,
+      "water_volume_m3": 49772952.0,
+      "debris_volume_m3": 40551768.0,
+      "peak_discharge_m3s": 274638.69
+    },
+    {
+      "time_sec": 3000.14,
+      "inundated_area_km2": 57.1795,
+      "active_volume_m3": 90563472.0,
+      "water_volume_m3": 49798908.0,
+      "debris_volume_m3": 40764564.0,
+      "peak_discharge_m3s": 269626.03
+    },
+    {
+      "time_sec": 3030.14,
+      "inundated_area_km2": 57.53698,
+      "active_volume_m3": 90929824.0,
+      "water_volume_m3": 49908576.0,
+      "debris_volume_m3": 41021248.0,
+      "peak_discharge_m3s": 264667.25
+    },
+    {
+      "time_sec": 3060.16,
+      "inundated_area_km2": 57.91982,
+      "active_volume_m3": 91366128.0,
+      "water_volume_m3": 50105392.0,
+      "debris_volume_m3": 41260736.0,
+      "peak_discharge_m3s": 259594.09
+    },
+    {
+      "time_sec": 3090.15,
+      "inundated_area_km2": 58.50636,
+      "active_volume_m3": 91851240.0,
+      "water_volume_m3": 50448680.0,
+      "debris_volume_m3": 41402560.0,
+      "peak_discharge_m3s": 254445.91
+    },
+    {
+      "time_sec": 3120.14,
+      "inundated_area_km2": 59.14034,
+      "active_volume_m3": 92330936.0,
+      "water_volume_m3": 50636992.0,
+      "debris_volume_m3": 41693944.0,
+      "peak_discharge_m3s": 249390.44
+    },
+    {
+      "time_sec": 3150.04,
+      "inundated_area_km2": 59.71379,
+      "active_volume_m3": 92815424.0,
+      "water_volume_m3": 50759384.0,
+      "debris_volume_m3": 42056040.0,
+      "peak_discharge_m3s": 247254.16
+    },
+    {
+      "time_sec": 3180.05,
+      "inundated_area_km2": 60.26679,
+      "active_volume_m3": 93337512.0,
+      "water_volume_m3": 50925064.0,
+      "debris_volume_m3": 42412448.0,
+      "peak_discharge_m3s": 345620.62
+    },
+    {
+      "time_sec": 3210.0,
+      "inundated_area_km2": 60.85659,
+      "active_volume_m3": 93870352.0,
+      "water_volume_m3": 51092292.0,
+      "debris_volume_m3": 42778060.0,
+      "peak_discharge_m3s": 366040.62
+    },
+    {
+      "time_sec": 3240.11,
+      "inundated_area_km2": 61.52821,
+      "active_volume_m3": 94432624.0,
+      "water_volume_m3": 51266232.0,
+      "debris_volume_m3": 43166392.0,
+      "peak_discharge_m3s": 376328.62
+    },
+    {
+      "time_sec": 3270.01,
+      "inundated_area_km2": 62.23499,
+      "active_volume_m3": 95011472.0,
+      "water_volume_m3": 51479560.0,
+      "debris_volume_m3": 43531912.0,
+      "peak_discharge_m3s": 382769.31
+    },
+    {
+      "time_sec": 3300.09,
+      "inundated_area_km2": 62.95733,
+      "active_volume_m3": 95637664.0,
+      "water_volume_m3": 51727976.0,
+      "debris_volume_m3": 43909688.0,
+      "peak_discharge_m3s": 388518.97
+    },
+    {
+      "time_sec": 3330.0,
+      "inundated_area_km2": 63.7451,
+      "active_volume_m3": 96276024.0,
+      "water_volume_m3": 52015696.0,
+      "debris_volume_m3": 44260328.0,
+      "peak_discharge_m3s": 394447.94
+    },
+    {
+      "time_sec": 3360.04,
+      "inundated_area_km2": 64.4977,
+      "active_volume_m3": 96927456.0,
+      "water_volume_m3": 52265012.0,
+      "debris_volume_m3": 44662444.0,
+      "peak_discharge_m3s": 400316.31
+    },
+    {
+      "time_sec": 3390.04,
+      "inundated_area_km2": 65.22003,
+      "active_volume_m3": 97606136.0,
+      "water_volume_m3": 52614056.0,
+      "debris_volume_m3": 44992080.0,
+      "peak_discharge_m3s": 405018.69
+    },
+    {
+      "time_sec": 3420.14,
+      "inundated_area_km2": 65.96608,
+      "active_volume_m3": 98296016.0,
+      "water_volume_m3": 52869424.0,
+      "debris_volume_m3": 45426592.0,
+      "peak_discharge_m3s": 408197.06
+    },
+    {
+      "time_sec": 3450.04,
+      "inundated_area_km2": 66.65815,
+      "active_volume_m3": 98978608.0,
+      "water_volume_m3": 53051760.0,
+      "debris_volume_m3": 45926848.0,
+      "peak_discharge_m3s": 410283.38
+    },
+    {
+      "time_sec": 3480.08,
+      "inundated_area_km2": 67.26595,
+      "active_volume_m3": 99658160.0,
+      "water_volume_m3": 53308648.0,
+      "debris_volume_m3": 46349512.0,
+      "peak_discharge_m3s": 411474.62
+    },
+    {
+      "time_sec": 3510.11,
+      "inundated_area_km2": 67.84104,
+      "active_volume_m3": 100338000.0,
+      "water_volume_m3": 53579288.0,
+      "debris_volume_m3": 46758712.0,
+      "peak_discharge_m3s": 411968.69
+    },
+    {
+      "time_sec": 3540.08,
+      "inundated_area_km2": 68.46275,
+      "active_volume_m3": 101013256.0,
+      "water_volume_m3": 53838916.0,
+      "debris_volume_m3": 47174340.0,
+      "peak_discharge_m3s": 411727.56
+    },
+    {
+      "time_sec": 3570.03,
+      "inundated_area_km2": 69.06319,
+      "active_volume_m3": 101687712.0,
+      "water_volume_m3": 54144816.0,
+      "debris_volume_m3": 47542896.0,
+      "peak_discharge_m3s": 410880.62
+    },
+    {
+      "time_sec": 3600.02,
+      "inundated_area_km2": 69.66363,
+      "active_volume_m3": 102354024.0,
+      "water_volume_m3": 54415028.0,
+      "debris_volume_m3": 47938996.0,
+      "peak_discharge_m3s": 409643.12
+    },
+    {
+      "time_sec": 3630.13,
+      "inundated_area_km2": 70.29598,
+      "active_volume_m3": 103011360.0,
+      "water_volume_m3": 54683300.0,
+      "debris_volume_m3": 48328060.0,
+      "peak_discharge_m3s": 407997.75
+    },
+    {
+      "time_sec": 3660.05,
+      "inundated_area_km2": 70.88497,
+      "active_volume_m3": 103652488.0,
+      "water_volume_m3": 54931040.0,
+      "debris_volume_m3": 48721448.0,
+      "peak_discharge_m3s": 406071.44
+    },
+    {
+      "time_sec": 3690.15,
+      "inundated_area_km2": 71.37007,
+      "active_volume_m3": 104291600.0,
+      "water_volume_m3": 55115840.0,
+      "debris_volume_m3": 49175760.0,
+      "peak_discharge_m3s": 403930.47
+    },
+    {
+      "time_sec": 3720.09,
+      "inundated_area_km2": 71.75864,
+      "active_volume_m3": 104924808.0,
+      "water_volume_m3": 55345824.0,
+      "debris_volume_m3": 49578984.0,
+      "peak_discharge_m3s": 401714.34
+    },
+    {
+      "time_sec": 3750.04,
+      "inundated_area_km2": 72.10876,
+      "active_volume_m3": 105556288.0,
+      "water_volume_m3": 55593512.0,
+      "debris_volume_m3": 49962776.0,
+      "peak_discharge_m3s": 399545.72
+    },
+    {
+      "time_sec": 3780.01,
+      "inundated_area_km2": 72.41962,
+      "active_volume_m3": 106186224.0,
+      "water_volume_m3": 55846920.0,
+      "debris_volume_m3": 50339304.0,
+      "peak_discharge_m3s": 397470.25
+    },
+    {
+      "time_sec": 3810.01,
+      "inundated_area_km2": 72.74274,
+      "active_volume_m3": 106814808.0,
+      "water_volume_m3": 56100488.0,
+      "debris_volume_m3": 50714320.0,
+      "peak_discharge_m3s": 395507.69
+    },
+    {
+      "time_sec": 3840.11,
+      "inundated_area_km2": 73.02906,
+      "active_volume_m3": 107442208.0,
+      "water_volume_m3": 56353392.0,
+      "debris_volume_m3": 51088816.0,
+      "peak_discharge_m3s": 393534.09
+    },
+    {
+      "time_sec": 3870.02,
+      "inundated_area_km2": 73.27447,
+      "active_volume_m3": 108061848.0,
+      "water_volume_m3": 56605748.0,
+      "debris_volume_m3": 51456100.0,
+      "peak_discharge_m3s": 391607.53
+    },
+    {
+      "time_sec": 3900.17,
+      "inundated_area_km2": 73.47653,
+      "active_volume_m3": 108683832.0,
+      "water_volume_m3": 56855424.0,
+      "debris_volume_m3": 51828408.0,
+      "peak_discharge_m3s": 389656.25
+    },
+    {
+      "time_sec": 3930.09,
+      "inundated_area_km2": 73.6794,
+      "active_volume_m3": 109298928.0,
+      "water_volume_m3": 57104600.0,
+      "debris_volume_m3": 52194328.0,
+      "peak_discharge_m3s": 387616.16
+    },
+    {
+      "time_sec": 3960.15,
+      "inundated_area_km2": 73.84383,
+      "active_volume_m3": 109915248.0,
+      "water_volume_m3": 57356920.0,
+      "debris_volume_m3": 52558328.0,
+      "peak_discharge_m3s": 385534.09
+    },
+    {
+      "time_sec": 3990.09,
+      "inundated_area_km2": 73.9968,
+      "active_volume_m3": 110526864.0,
+      "water_volume_m3": 57607648.0,
+      "debris_volume_m3": 52919216.0,
+      "peak_discharge_m3s": 383475.44
+    },
+    {
+      "time_sec": 4020.08,
+      "inundated_area_km2": 74.16777,
+      "active_volume_m3": 111137240.0,
+      "water_volume_m3": 57859216.0,
+      "debris_volume_m3": 53278024.0,
+      "peak_discharge_m3s": 381375.69
+    },
+    {
+      "time_sec": 4050.0,
+      "inundated_area_km2": 74.38046,
+      "active_volume_m3": 111741488.0,
+      "water_volume_m3": 58112648.0,
+      "debris_volume_m3": 53628840.0,
+      "peak_discharge_m3s": 379147.34
+    },
+    {
+      "time_sec": 4080.05,
+      "inundated_area_km2": 74.64305,
+      "active_volume_m3": 112340464.0,
+      "water_volume_m3": 58375324.0,
+      "debris_volume_m3": 53965140.0,
+      "peak_discharge_m3s": 376777.25
+    },
+    {
+      "time_sec": 4110.06,
+      "inundated_area_km2": 74.958,
+      "active_volume_m3": 112930720.0,
+      "water_volume_m3": 58625504.0,
+      "debris_volume_m3": 54305216.0,
+      "peak_discharge_m3s": 374252.06
+    },
+    {
+      "time_sec": 4140.16,
+      "inundated_area_km2": 75.3024,
+      "active_volume_m3": 113522320.0,
+      "water_volume_m3": 58875604.0,
+      "debris_volume_m3": 54646716.0,
+      "peak_discharge_m3s": 371488.25
+    },
+    {
+      "time_sec": 4170.06,
+      "inundated_area_km2": 75.64434,
+      "active_volume_m3": 114111744.0,
+      "water_volume_m3": 59120184.0,
+      "debris_volume_m3": 54991560.0,
+      "peak_discharge_m3s": 368545.66
+    },
+    {
+      "time_sec": 4200.1,
+      "inundated_area_km2": 75.96419,
+      "active_volume_m3": 114702248.0,
+      "water_volume_m3": 59354632.0,
+      "debris_volume_m3": 55347616.0,
+      "peak_discharge_m3s": 365409.88
+    },
+    {
+      "time_sec": 4230.13,
+      "inundated_area_km2": 76.23578,
+      "active_volume_m3": 115288920.0,
+      "water_volume_m3": 59594472.0,
+      "debris_volume_m3": 55694448.0,
+      "peak_discharge_m3s": 362148.0
+    },
+    {
+      "time_sec": 4260.01,
+      "inundated_area_km2": 76.536,
+      "active_volume_m3": 115867600.0,
+      "water_volume_m3": 59852532.0,
+      "debris_volume_m3": 56015068.0,
+      "peak_discharge_m3s": 358769.75
+    },
+    {
+      "time_sec": 4290.01,
+      "inundated_area_km2": 76.85831,
+      "active_volume_m3": 116442040.0,
+      "water_volume_m3": 60092496.0,
+      "debris_volume_m3": 56349544.0,
+      "peak_discharge_m3s": 355292.62
+    },
+    {
+      "time_sec": 4320.04,
+      "inundated_area_km2": 77.18144,
+      "active_volume_m3": 117015552.0,
+      "water_volume_m3": 60345912.0,
+      "debris_volume_m3": 56669640.0,
+      "peak_discharge_m3s": 351796.12
+    },
+    {
+      "time_sec": 4350.1,
+      "inundated_area_km2": 77.56019,
+      "active_volume_m3": 117576368.0,
+      "water_volume_m3": 60594048.0,
+      "debris_volume_m3": 56982320.0,
+      "peak_discharge_m3s": 348147.12
+    },
+    {
+      "time_sec": 4380.03,
+      "inundated_area_km2": 77.89723,
+      "active_volume_m3": 118132032.0,
+      "water_volume_m3": 60816328.0,
+      "debris_volume_m3": 57315704.0,
+      "peak_discharge_m3s": 344416.12
+    },
+    {
+      "time_sec": 4410.02,
+      "inundated_area_km2": 78.24735,
+      "active_volume_m3": 118694304.0,
+      "water_volume_m3": 61045368.0,
+      "debris_volume_m3": 57648936.0,
+      "peak_discharge_m3s": 340572.34
+    },
+    {
+      "time_sec": 4440.08,
+      "inundated_area_km2": 78.52466,
+      "active_volume_m3": 119243872.0,
+      "water_volume_m3": 61269292.0,
+      "debris_volume_m3": 57974580.0,
+      "peak_discharge_m3s": 336664.44
+    },
+    {
+      "time_sec": 4470.06,
+      "inundated_area_km2": 78.75862,
+      "active_volume_m3": 119791984.0,
+      "water_volume_m3": 61495648.0,
+      "debris_volume_m3": 58296336.0,
+      "peak_discharge_m3s": 332802.5
+    },
+    {
+      "time_sec": 4500.13,
+      "inundated_area_km2": 78.94841,
+      "active_volume_m3": 120329776.0,
+      "water_volume_m3": 61711084.0,
+      "debris_volume_m3": 58618692.0,
+      "peak_discharge_m3s": 328952.66
+    },
+    {
+      "time_sec": 4530.16,
+      "inundated_area_km2": 79.1431,
+      "active_volume_m3": 120860616.0,
+      "water_volume_m3": 61923584.0,
+      "debris_volume_m3": 58937032.0,
+      "peak_discharge_m3s": 325143.81
+    },
+    {
+      "time_sec": 4560.14,
+      "inundated_area_km2": 79.30426,
+      "active_volume_m3": 121386432.0,
+      "water_volume_m3": 62140084.0,
+      "debris_volume_m3": 59246348.0,
+      "peak_discharge_m3s": 321384.47
+    },
+    {
+      "time_sec": 4590.05,
+      "inundated_area_km2": 79.45232,
+      "active_volume_m3": 121905816.0,
+      "water_volume_m3": 62355216.0,
+      "debris_volume_m3": 59550600.0,
+      "peak_discharge_m3s": 317698.78
+    },
+    {
+      "time_sec": 4620.02,
+      "inundated_area_km2": 79.62575,
+      "active_volume_m3": 122420144.0,
+      "water_volume_m3": 62569848.0,
+      "debris_volume_m3": 59850296.0,
+      "peak_discharge_m3s": 314065.88
+    },
+    {
+      "time_sec": 4650.0,
+      "inundated_area_km2": 79.8229,
+      "active_volume_m3": 122927712.0,
+      "water_volume_m3": 62789344.0,
+      "debris_volume_m3": 60138368.0,
+      "peak_discharge_m3s": 310349.19
+    },
+    {
+      "time_sec": 4680.12,
+      "inundated_area_km2": 80.08712,
+      "active_volume_m3": 123430712.0,
+      "water_volume_m3": 63005272.0,
+      "debris_volume_m3": 60425440.0,
+      "peak_discharge_m3s": 306529.75
+    },
+    {
+      "time_sec": 4710.14,
+      "inundated_area_km2": 80.36771,
+      "active_volume_m3": 123925808.0,
+      "water_volume_m3": 63233696.0,
+      "debris_volume_m3": 60692112.0,
+      "peak_discharge_m3s": 302582.44
+    },
+    {
+      "time_sec": 4740.08,
+      "inundated_area_km2": 80.64666,
+      "active_volume_m3": 124414016.0,
+      "water_volume_m3": 63445832.0,
+      "debris_volume_m3": 60968184.0,
+      "peak_discharge_m3s": 298501.19
+    },
+    {
+      "time_sec": 4770.06,
+      "inundated_area_km2": 80.95343,
+      "active_volume_m3": 124895128.0,
+      "water_volume_m3": 63646984.0,
+      "debris_volume_m3": 61248144.0,
+      "peak_discharge_m3s": 294262.56
+    },
+    {
+      "time_sec": 4800.09,
+      "inundated_area_km2": 81.30192,
+      "active_volume_m3": 125369776.0,
+      "water_volume_m3": 63872252.0,
+      "debris_volume_m3": 61497524.0,
+      "peak_discharge_m3s": 289773.59
+    },
+    {
+      "time_sec": 4830.04,
+      "inundated_area_km2": 81.70439,
+      "active_volume_m3": 125835088.0,
+      "water_volume_m3": 64107044.0,
+      "debris_volume_m3": 61728044.0,
+      "peak_discharge_m3s": 285016.75
+    },
+    {
+      "time_sec": 4860.1,
+      "inundated_area_km2": 82.09623,
+      "active_volume_m3": 126293456.0,
+      "water_volume_m3": 64278252.0,
+      "debris_volume_m3": 62015204.0,
+      "peak_discharge_m3s": 280005.84
+    },
+    {
+      "time_sec": 4890.14,
+      "inundated_area_km2": 82.47662,
+      "active_volume_m3": 126748624.0,
+      "water_volume_m3": 64450128.0,
+      "debris_volume_m3": 62298496.0,
+      "peak_discharge_m3s": 274831.97
+    },
+    {
+      "time_sec": 4920.01,
+      "inundated_area_km2": 82.87337,
+      "active_volume_m3": 127198736.0,
+      "water_volume_m3": 64652236.0,
+      "debris_volume_m3": 62546500.0,
+      "peak_discharge_m3s": 269532.56
+    },
+    {
+      "time_sec": 4950.02,
+      "inundated_area_km2": 83.2284,
+      "active_volume_m3": 127644008.0,
+      "water_volume_m3": 64838108.0,
+      "debris_volume_m3": 62805900.0,
+      "peak_discharge_m3s": 264177.94
+    },
+    {
+      "time_sec": 4980.0,
+      "inundated_area_km2": 83.59243,
+      "active_volume_m3": 128082312.0,
+      "water_volume_m3": 65024312.0,
+      "debris_volume_m3": 63058000.0,
+      "peak_discharge_m3s": 258845.66
+    },
+    {
+      "time_sec": 5010.01,
+      "inundated_area_km2": 83.95564,
+      "active_volume_m3": 128513520.0,
+      "water_volume_m3": 65202808.0,
+      "debris_volume_m3": 63310712.0,
+      "peak_discharge_m3s": 253623.98
+    },
+    {
+      "time_sec": 5040.07,
+      "inundated_area_km2": 84.30495,
+      "active_volume_m3": 128936448.0,
+      "water_volume_m3": 65366104.0,
+      "debris_volume_m3": 63570344.0,
+      "peak_discharge_m3s": 248568.81
+    },
+    {
+      "time_sec": 5070.08,
+      "inundated_area_km2": 84.60026,
+      "active_volume_m3": 129351112.0,
+      "water_volume_m3": 65532296.0,
+      "debris_volume_m3": 63818816.0,
+      "peak_discharge_m3s": 243657.75
+    },
+    {
+      "time_sec": 5100.04,
+      "inundated_area_km2": 84.90866,
+      "active_volume_m3": 129759864.0,
+      "water_volume_m3": 65710052.0,
+      "debris_volume_m3": 64049812.0,
+      "peak_discharge_m3s": 238774.66
+    },
+    {
+      "time_sec": 5130.12,
+      "inundated_area_km2": 85.24651,
+      "active_volume_m3": 130164352.0,
+      "water_volume_m3": 65900448.0,
+      "debris_volume_m3": 64263904.0,
+      "peak_discharge_m3s": 233865.75
+    },
+    {
+      "time_sec": 5160.03,
+      "inundated_area_km2": 85.61709,
+      "active_volume_m3": 130559120.0,
+      "water_volume_m3": 66094756.0,
+      "debris_volume_m3": 64464364.0,
+      "peak_discharge_m3s": 228996.64
+    },
+    {
+      "time_sec": 5190.08,
+      "inundated_area_km2": 86.02284,
+      "active_volume_m3": 130946480.0,
+      "water_volume_m3": 66307656.0,
+      "debris_volume_m3": 64638824.0,
+      "peak_discharge_m3s": 224161.0
+    },
+    {
+      "time_sec": 5220.14,
+      "inundated_area_km2": 86.40895,
+      "active_volume_m3": 131323328.0,
+      "water_volume_m3": 66472632.0,
+      "debris_volume_m3": 64850696.0,
+      "peak_discharge_m3s": 223522.7
+    },
+    {
+      "time_sec": 5250.06,
+      "inundated_area_km2": 86.74271,
+      "active_volume_m3": 131688984.0,
+      "water_volume_m3": 66599888.0,
+      "debris_volume_m3": 65089096.0,
+      "peak_discharge_m3s": 223002.39
+    },
+    {
+      "time_sec": 5280.14,
+      "inundated_area_km2": 87.11983,
+      "active_volume_m3": 132046352.0,
+      "water_volume_m3": 66735640.0,
+      "debris_volume_m3": 65310712.0,
+      "peak_discharge_m3s": 222364.47
+    },
+    {
+      "time_sec": 5310.08,
+      "inundated_area_km2": 87.50676,
+      "active_volume_m3": 132390624.0,
+      "water_volume_m3": 66896072.0,
+      "debris_volume_m3": 65494552.0,
+      "peak_discharge_m3s": 221588.81
+    },
+    {
+      "time_sec": 5340.05,
+      "inundated_area_km2": 87.93051,
+      "active_volume_m3": 132722384.0,
+      "water_volume_m3": 67036976.0,
+      "debris_volume_m3": 65685408.0,
+      "peak_discharge_m3s": 220731.77
+    },
+    {
+      "time_sec": 5370.04,
+      "inundated_area_km2": 88.35507,
+      "active_volume_m3": 133041056.0,
+      "water_volume_m3": 67157160.0,
+      "debris_volume_m3": 65883896.0,
+      "peak_discharge_m3s": 219781.89
+    },
+    {
+      "time_sec": 5400.06,
+      "inundated_area_km2": 88.74528,
+      "active_volume_m3": 133348352.0,
+      "water_volume_m3": 67236512.0,
+      "debris_volume_m3": 66111840.0,
+      "peak_discharge_m3s": 218716.97
+    },
+    {
+      "time_sec": 5430.11,
+      "inundated_area_km2": 89.10767,
+      "active_volume_m3": 133647032.0,
+      "water_volume_m3": 67350536.0,
+      "debris_volume_m3": 66296496.0,
+      "peak_discharge_m3s": 217554.84
+    },
+    {
+      "time_sec": 5460.05,
+      "inundated_area_km2": 89.48234,
+      "active_volume_m3": 133937552.0,
+      "water_volume_m3": 67454636.0,
+      "debris_volume_m3": 66482916.0,
+      "peak_discharge_m3s": 216315.44
+    },
+    {
+      "time_sec": 5490.02,
+      "inundated_area_km2": 89.86109,
+      "active_volume_m3": 134228512.0,
+      "water_volume_m3": 67581116.0,
+      "debris_volume_m3": 66647396.0,
+      "peak_discharge_m3s": 215029.08
+    },
+    {
+      "time_sec": 5520.04,
+      "inundated_area_km2": 90.28974,
+      "active_volume_m3": 134520992.0,
+      "water_volume_m3": 67705208.0,
+      "debris_volume_m3": 66815784.0,
+      "peak_discharge_m3s": 213702.17
+    },
+    {
+      "time_sec": 5550.1,
+      "inundated_area_km2": 90.73067,
+      "active_volume_m3": 134812432.0,
+      "water_volume_m3": 67840544.0,
+      "debris_volume_m3": 66971888.0,
+      "peak_discharge_m3s": 212322.25
+    },
+    {
+      "time_sec": 5580.06,
+      "inundated_area_km2": 91.24767,
+      "active_volume_m3": 135096512.0,
+      "water_volume_m3": 67988536.0,
+      "debris_volume_m3": 67107976.0,
+      "peak_discharge_m3s": 210934.44
+    },
+    {
+      "time_sec": 5610.07,
+      "inundated_area_km2": 91.73768,
+      "active_volume_m3": 135373152.0,
+      "water_volume_m3": 68096096.0,
+      "debris_volume_m3": 67277056.0,
+      "peak_discharge_m3s": 233483.0
+    },
+    {
+      "time_sec": 5640.15,
+      "inundated_area_km2": 92.25877,
+      "active_volume_m3": 135644336.0,
+      "water_volume_m3": 68209616.0,
+      "debris_volume_m3": 67434720.0,
+      "peak_discharge_m3s": 267053.34
+    },
+    {
+      "time_sec": 5670.12,
+      "inundated_area_km2": 92.78232,
+      "active_volume_m3": 135906912.0,
+      "water_volume_m3": 68333752.0,
+      "debris_volume_m3": 67573160.0,
+      "peak_discharge_m3s": 286616.38
+    },
+    {
+      "time_sec": 5700.01,
+      "inundated_area_km2": 93.28541,
+      "active_volume_m3": 136161728.0,
+      "water_volume_m3": 68399176.0,
+      "debris_volume_m3": 67762552.0,
+      "peak_discharge_m3s": 301155.75
+    },
+    {
+      "time_sec": 5730.11,
+      "inundated_area_km2": 93.74352,
+      "active_volume_m3": 136411584.0,
+      "water_volume_m3": 68500408.0,
+      "debris_volume_m3": 67911176.0,
+      "peak_discharge_m3s": 313327.81
+    },
+    {
+      "time_sec": 5760.12,
+      "inundated_area_km2": 94.19998,
+      "active_volume_m3": 136653392.0,
+      "water_volume_m3": 68606720.0,
+      "debris_volume_m3": 68046672.0,
+      "peak_discharge_m3s": 322524.53
+    },
+    {
+      "time_sec": 5790.03,
+      "inundated_area_km2": 94.65563,
+      "active_volume_m3": 136886944.0,
+      "water_volume_m3": 68692488.0,
+      "debris_volume_m3": 68194456.0,
+      "peak_discharge_m3s": 329000.69
+    },
+    {
+      "time_sec": 5820.0,
+      "inundated_area_km2": 95.12192,
+      "active_volume_m3": 137113248.0,
+      "water_volume_m3": 68798784.0,
+      "debris_volume_m3": 68314464.0,
+      "peak_discharge_m3s": 333318.47
+    },
+    {
+      "time_sec": 5850.04,
+      "inundated_area_km2": 95.60456,
+      "active_volume_m3": 137332032.0,
+      "water_volume_m3": 68874488.0,
+      "debris_volume_m3": 68457544.0,
+      "peak_discharge_m3s": 335948.62
+    },
+    {
+      "time_sec": 5880.15,
+      "inundated_area_km2": 96.07166,
+      "active_volume_m3": 137543616.0,
+      "water_volume_m3": 68943968.0,
+      "debris_volume_m3": 68599648.0,
+      "peak_discharge_m3s": 337273.41
+    },
+    {
+      "time_sec": 5910.02,
+      "inundated_area_km2": 96.51668,
+      "active_volume_m3": 137746752.0,
+      "water_volume_m3": 69006128.0,
+      "debris_volume_m3": 68740624.0,
+      "peak_discharge_m3s": 337640.38
+    },
+    {
+      "time_sec": 5940.1,
+      "inundated_area_km2": 96.94206,
+      "active_volume_m3": 137944800.0,
+      "water_volume_m3": 69079632.0,
+      "debris_volume_m3": 68865168.0,
+      "peak_discharge_m3s": 337242.09
+    },
+    {
+      "time_sec": 5970.11,
+      "inundated_area_km2": 97.36908,
+      "active_volume_m3": 138135504.0,
+      "water_volume_m3": 69165512.0,
+      "debris_volume_m3": 68969992.0,
+      "peak_discharge_m3s": 336174.69
+    },
+    {
+      "time_sec": 6000.03,
+      "inundated_area_km2": 97.83209,
+      "active_volume_m3": 138324048.0,
+      "water_volume_m3": 69260944.0,
+      "debris_volume_m3": 69063104.0,
+      "peak_discharge_m3s": 334568.38
+    },
+    {
+      "time_sec": 6030.03,
+      "inundated_area_km2": 98.29756,
+      "active_volume_m3": 138512064.0,
+      "water_volume_m3": 69325248.0,
+      "debris_volume_m3": 69186816.0,
+      "peak_discharge_m3s": 332569.47
+    },
+    {
+      "time_sec": 6060.11,
+      "inundated_area_km2": 98.76384,
+      "active_volume_m3": 138695200.0,
+      "water_volume_m3": 69387568.0,
+      "debris_volume_m3": 69307632.0,
+      "peak_discharge_m3s": 330282.03
+    },
+    {
+      "time_sec": 6090.1,
+      "inundated_area_km2": 99.17613,
+      "active_volume_m3": 138870976.0,
+      "water_volume_m3": 69434160.0,
+      "debris_volume_m3": 69436816.0,
+      "peak_discharge_m3s": 327790.19
+    },
+    {
+      "time_sec": 6120.0,
+      "inundated_area_km2": 99.58924,
+      "active_volume_m3": 139040224.0,
+      "water_volume_m3": 69496408.0,
+      "debris_volume_m3": 69543816.0,
+      "peak_discharge_m3s": 325036.59
+    },
+    {
+      "time_sec": 6150.14,
+      "inundated_area_km2": 100.01463,
+      "active_volume_m3": 139203568.0,
+      "water_volume_m3": 69546080.0,
+      "debris_volume_m3": 69657488.0,
+      "peak_discharge_m3s": 322044.5
+    },
+    {
+      "time_sec": 6180.03,
+      "inundated_area_km2": 100.38029,
+      "active_volume_m3": 139359936.0,
+      "water_volume_m3": 69607688.0,
+      "debris_volume_m3": 69752248.0,
+      "peak_discharge_m3s": 318947.97
+    },
+    {
+      "time_sec": 6210.0,
+      "inundated_area_km2": 100.7844,
+      "active_volume_m3": 139511072.0,
+      "water_volume_m3": 69684224.0,
+      "debris_volume_m3": 69826848.0,
+      "peak_discharge_m3s": 315689.0
+    },
+    {
+      "time_sec": 6240.05,
+      "inundated_area_km2": 101.23187,
+      "active_volume_m3": 139660768.0,
+      "water_volume_m3": 69779328.0,
+      "debris_volume_m3": 69881440.0,
+      "peak_discharge_m3s": 312170.25
+    },
+    {
+      "time_sec": 6270.02,
+      "inundated_area_km2": 101.71533,
+      "active_volume_m3": 139808576.0,
+      "water_volume_m3": 69852464.0,
+      "debris_volume_m3": 69956112.0,
+      "peak_discharge_m3s": 308491.88
+    },
+    {
+      "time_sec": 6300.08,
+      "inundated_area_km2": 102.16035,
+      "active_volume_m3": 139954944.0,
+      "water_volume_m3": 69897712.0,
+      "debris_volume_m3": 70057232.0,
+      "peak_discharge_m3s": 304750.09
+    },
+    {
+      "time_sec": 6330.05,
+      "inundated_area_km2": 102.56528,
+      "active_volume_m3": 140098880.0,
+      "water_volume_m3": 69933536.0,
+      "debris_volume_m3": 70165344.0,
+      "peak_discharge_m3s": 301013.94
+    },
+    {
+      "time_sec": 6360.11,
+      "inundated_area_km2": 102.97185,
+      "active_volume_m3": 140241344.0,
+      "water_volume_m3": 69992096.0,
+      "debris_volume_m3": 70249248.0,
+      "peak_discharge_m3s": 297187.88
+    },
+    {
+      "time_sec": 6390.09,
+      "inundated_area_km2": 103.39968,
+      "active_volume_m3": 140379392.0,
+      "water_volume_m3": 70053160.0,
+      "debris_volume_m3": 70326232.0,
+      "peak_discharge_m3s": 293248.16
+    },
+    {
+      "time_sec": 6420.16,
+      "inundated_area_km2": 103.81034,
+      "active_volume_m3": 140515968.0,
+      "water_volume_m3": 70139528.0,
+      "debris_volume_m3": 70376440.0,
+      "peak_discharge_m3s": 289240.22
+    },
+    {
+      "time_sec": 6450.15,
+      "inundated_area_km2": 104.13183,
+      "active_volume_m3": 140594480.0,
+      "water_volume_m3": 70212816.0,
+      "debris_volume_m3": 70381664.0,
+      "peak_discharge_m3s": 285236.66
+    }
+  ],
+  "settlement_damage_reports": [],
+  "infrastructure_damage_summary": {
+    "hospitals_destroyed": 0,
+    "schools_destroyed": 0,
+    "roads_destroyed_km": 58.94,
+    "bridges_destroyed": 19,
+    "power_facilities_destroyed": 2,
+    "dams_at_risk": 1,
+    "critical_assets_at_risk": [
+      "Teesta Stage III Dam"
+    ]
+  },
+  "texture_channel_map": {
+    "R": "peak_depth / h_norm_max_m",
+    "G": "arrival_time / sim_duration_s (255 = never inundated)",
+    "B": "peak_velocity / v_norm_max_ms",
+    "A": "sediment_debris_fraction"
+  }
+}
